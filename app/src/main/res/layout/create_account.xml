@@ -23,6 +23,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="134dp"
+        android:layout_height="76dp"
+        android:text="Join"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="45dp" />
+
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="340dp"
@@ -31,7 +42,7 @@
         android:hint=" Wisc Email"
         android:inputType="text"
         tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="231dp" />
+        tools:layout_editor_absoluteY="232dp" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -41,7 +52,7 @@
         android:hint=" Password"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="328dp" />
+        tools:layout_editor_absoluteY="327dp" />
 
     <Button
         android:id="@+id/button"
@@ -51,26 +62,36 @@
         android:text="Button"
         android:textColor="@color/black"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="453dp" />
+        tools:layout_editor_absoluteY="508dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create an Account"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="581dp" />
+    <EditText
+        android:id="@+id/repasswordEditText"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:hint=" Re-enter Password"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="421dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find You Next home"
+        android:text="Already Got Loggin?"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join Our Community"
         android:textSize="15sp"
-        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="695dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
