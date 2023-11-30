@@ -56,12 +56,12 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="115dp"
-        android:layout_height="61dp"
-        android:background="#FFFFFF"
-        android:text="Button"
+        android:layout_width="127dp"
+        android:layout_height="58dp"
+        android:background="@drawable/rounded_button"
+        android:text="Submit"
         android:textColor="@color/black"
-        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteX="142dp"
         tools:layout_editor_absoluteY="508dp" />
 
     <EditText
