@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        />
+
+    <item
+        android:id="@+id/personalProfile"
+        android:title="Profile"
+        />
+
+    <item
+        android:id="@+id/searchListing"
+        android:title="Search Listing"
+        />
+
+    <item
+        android:id="@+id/saved"
+        android:title="Saved Listing"
+        />
+
+    <item
+        android:id="@+id/personalListing"
+        android:title="Personal Listing"
+        />
+
+    <item
+        android:id="@+id/chat"
+        android:title="Chat"
+        />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        />
+
+</menu>
