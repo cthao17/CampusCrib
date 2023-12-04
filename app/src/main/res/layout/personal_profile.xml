@@ -8,12 +8,15 @@
     android:background="#ED3C3C">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="27dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:id="@+id/profile_image_view"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:background="@drawable/circular_bg"
+        android:backgroundTint="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/person_icon"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/personalOther"
@@ -104,6 +107,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Listings"
+        android:background="@drawable/rounded_button"
+        android:onClick="loginClick"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:backgroundTint="@color/white"
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="650dp" />
 
@@ -112,6 +120,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Saved"
+        android:background="@drawable/rounded_button"
+        android:onClick="loginClick"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:backgroundTint="@color/white"
         tools:layout_editor_absoluteX="289dp"
         tools:layout_editor_absoluteY="650dp" />
 
