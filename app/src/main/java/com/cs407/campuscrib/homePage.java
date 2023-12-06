@@ -53,18 +53,18 @@ public class homePage extends AppCompatActivity {
                     //} else if (item.getItemId() == R.id.personalProfile) {
                     //    goToProfileActivity();
                     //    return true;
-                    //} else if (item.getItemId() == R.id.searchListing) {
-                    //    goToSearchListingActivity();
-                    //    return true;
+                    } else if (item.getItemId() == R.id.searchListing) {
+                        goToSearchListingActivity();
+                        return true;
                     //} else if (item.getItemId() == R.id.saved) {
                     //    goToSavedListingActivity();
                     //    return true;
                     //} else if (item.getItemId() == R.id.personalListing) {
                     //    goToPersonalListingActivity();
                     //    return true;
-                    //} else if (item.getItemId() == R.id.chat) {
-                    //    goToChatActivity();
-                    //    return true;
+                    } else if (item.getItemId() == R.id.chat) {
+                        goToChatActivity();
+                        return true;
                 } else {
                     return false;
                 }
@@ -82,16 +82,17 @@ public class homePage extends AppCompatActivity {
         startActivity(intent);
     }
 //    public void goToCreateListingActivity() {
-//        Intent intent = new Intent(this, createActivity.class);
+//        Intent intent = new Intent(this, createActivity.class)
+//        startActivity(intent);
 //    }
 //    public void goToProfileActivity() {
 //        Intent intent = new Intent(this, ProfileActivity.class);
 //        startActivity(intent);
 //    }
-//    public void goToSearchListingActivity() {
-//        Intent intent = new Intent(this, SearchListingActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToSearchListingActivity() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
 //    public void goToSavedListingActivity() {
 //        Intent intent = new Intent(this, SavedListingActivity.class);
 //        startActivity(intent);
@@ -100,8 +101,8 @@ public class homePage extends AppCompatActivity {
 //        Intent intent = new Intent(this, PersonalListingActivity.class);
 //        startActivity(intent);
 //    }
-//    public void goToChatActivity() {
-//        Intent intent = new Intent(this, ChatActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToChatActivity() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
 }

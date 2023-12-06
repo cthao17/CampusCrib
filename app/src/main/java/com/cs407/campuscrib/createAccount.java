@@ -27,7 +27,9 @@ public class createAccount extends AppCompatActivity {
         String password = pw.getText().toString();
         String repassword = rePw.getText().toString();
 
-        if (!username.contains("@wisc.edu")) {
+        if (username.equals("") || password.equals("") || repassword.equals("")) {
+            Toast.makeText(this,"Please fill in all information", Toast.LENGTH_SHORT).show();
+        } else if (!username.contains("@wisc.edu")) {
             Toast.makeText(this, "Username must be your wisc email", Toast.LENGTH_SHORT).show();
         } else if (!password.equals(repassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -48,6 +50,10 @@ public class createAccount extends AppCompatActivity {
                         }
                     });
         }
+    }
+    public void onAlreadyGotLoginClick(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     public void goToActivity() {
         Intent intent = new Intent(this, homePage.class);

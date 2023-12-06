@@ -24,20 +24,23 @@ public class MainActivity extends AppCompatActivity {
         EditText pw = findViewById(R.id.passwordEditText);
         String username = user.getText().toString();
         String password = pw.getText().toString();
-
-        auth.signInWithEmailAndPassword(username, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            goToActivity();
-                        } else {
-                            Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                            user.getText().clear();
-                            pw.getText().clear();
+        if (username.equals("") || password.equals("")) {
+            Toast.makeText(this, "Please fill in all information", Toast.LENGTH_SHORT).show();
+        } else {
+            auth.signInWithEmailAndPassword(username, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                goToActivity();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                user.getText().clear();
+                                pw.getText().clear();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
     public void onCreateAccountClick(View view) {
         Intent intent = new Intent(this, createAccount.class);
