@@ -1,22 +1,20 @@
 package com.cs407.campuscrib;
 
-import android.content.Intent;
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.content.Intent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
 public class homePage extends AppCompatActivity {
-    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home_page);
     }
-//    public void createListingClick() {
+    //    public void createListingClick() {
 //        goToCreateListingActivity();
 //    }
 //    public void updateProfileClick() {
@@ -25,8 +23,20 @@ public class homePage extends AppCompatActivity {
 //    public void listingClick() {
 //        goToSearchListingActivity();
 //    }
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
+    public void listingClick(View view) {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+    public void updateProfileClick(View view) {
+        Intent intent = new Intent(this, homePage.class);
+        startActivity(intent);
+    }
+    public void createListingClick(View view) {
+        Intent intent = new Intent(this, homePage.class);
+        startActivity(intent);
+    }
+    public void showPopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.top_menu, popup.getMenu());
 
@@ -38,24 +48,23 @@ public class homePage extends AppCompatActivity {
                     goToHomeActivity();
                     return true;
                 } else if (item.getItemId() == R.id.logout) {
-                    sharedPreferences.edit().clear().apply();
                     goToLoginActivity();
                     return true;
-                //} else if (item.getItemId() == R.id.personalProfile) {
-                //    goToProfileActivity();
-                //    return true;
-                //} else if (item.getItemId() == R.id.searchListing) {
-                //    goToSearchListingActivity();
-                //    return true;
-                //} else if (item.getItemId() == R.id.saved) {
-                //    goToSavedListingActivity();
-                //    return true;
-                //} else if (item.getItemId() == R.id.personalListing) {
-                //    goToPersonalListingActivity();
-                //    return true;
-                //} else if (item.getItemId() == R.id.chat) {
-                //    goToChatActivity();
-                //    return true;
+                    //} else if (item.getItemId() == R.id.personalProfile) {
+                    //    goToProfileActivity();
+                    //    return true;
+                    //} else if (item.getItemId() == R.id.searchListing) {
+                    //    goToSearchListingActivity();
+                    //    return true;
+                    //} else if (item.getItemId() == R.id.saved) {
+                    //    goToSavedListingActivity();
+                    //    return true;
+                    //} else if (item.getItemId() == R.id.personalListing) {
+                    //    goToPersonalListingActivity();
+                    //    return true;
+                    //} else if (item.getItemId() == R.id.chat) {
+                    //    goToChatActivity();
+                    //    return true;
                 } else {
                     return false;
                 }

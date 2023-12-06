@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "888106620953",
+    "project_id": "campuscrib-c9722",
+    "storage_bucket": "campuscrib-c9722.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888106620953:android:b0aadb743ddf083764b288",
+        "android_client_info": {
+          "package_name": "com.cs407.campuscrib"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeWQd_oY0FlsSvPnIkTHtj7SPxQwmmBzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

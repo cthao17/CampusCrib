@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".homePage">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="417dp"
         android:layout_height="102dp"
-        android:layout_marginBottom="9dp"
         android:background="#ED3C3C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,52 +67,59 @@
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:layout_constraintVertical_bias="0.941" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/updateProfilebutton"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="735dp"
+        android:onClick="updateProfileClick"
+        android:text="Update Profile"
+        android:textSize="20sp"
+        app:backgroundTint="#ED3C3C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/createListingbutton"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="543dp"
+        android:onClick="createListingClick"
+        android:text="Create Listing"
+        android:textSize="20sp"
+        app:backgroundTint="#ED3C3C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/searchHousingbutton"
         android:layout_width="370dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="642dp"
         android:onClick="listingClick"
         android:text="Search for housing"
-        app:backgroundTint="#ED3C3C"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="733dp" />
-
-    <Button
-        android:id="@+id/updateProfbutton"
-        android:layout_width="370dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:onClick="updateProfileClick"
-        android:text="Update Profile"
         app:backgroundTint="#ED3C3C"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="826dp" />
-
-    <Button
-        android:id="@+id/createListingbutton"
-        android:layout_width="370dp"
-        android:layout_height="60dp"
-        android:onClick="createListingClick"
-        android:text="Create Listing"
-        app:backgroundTint="#ED3C3C"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="634dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/about"
         android:layout_width="372dp"
-        android:layout_height="331dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="131dp"
         android:background="@drawable/rounded_border"
         android:gravity="center"
         android:text="Welcome to CampusCrib, [User's Name]! \n \n Your housing search just got easier. Whether you're looking for the perfect place to stay or a great roommate to share it with, we've got you covered. Get started now to find your ideal housing solution, exclusively for UW-Madison students! Let's make your campus life comfortable and convenient. Happy searching!"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="131dp" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

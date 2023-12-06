@@ -1,36 +1,47 @@
 package com.cs407.campuscrib;
 
-import static com.cs407.campuscrib.DBHelper.sqLiteDatabase;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    SharedPreferences sharedPreferences;
-
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    public void loginClick(View view) {
+    public void loginPageLoginClick(View view) {
         EditText user = findViewById(R.id.usernameEditText);
         EditText pw = findViewById(R.id.passwordEditText);
         String username = user.getText().toString();
         String password = pw.getText().toString();
-        DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-        if (dbHelper.isUserValid(username, password)) {
-            sharedPreferences.edit().putString("username", username).apply();
-            goToActivity();
-        } else {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-        }
+        auth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            goToActivity();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                            user.getText().clear();
+                            pw.getText().clear();
+                        }
+                    }
+                });
+    }
+    public void onCreateAccountClick(View view) {
+        Intent intent = new Intent(this, createAccount.class);
+        startActivity(intent);
     }
     public void goToActivity() {
         Intent intent = new Intent(this, homePage.class);

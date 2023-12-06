@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ED3C3C"
-    tools:context=".MainActivity">
+    tools:context=".createAccount">
 
     <TextView
         android:id="@+id/textView"
@@ -87,18 +87,20 @@
         android:id="@+id/button"
         android:layout_width="127dp"
         android:layout_height="0dp"
-        android:layout_marginTop="609dp"
-        android:layout_marginBottom="207dp"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="239dp"
         android:background="@drawable/rounded_button"
         android:onClick="createAccountClick"
         android:text="Create Account"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/createRepasswordEditText" />
 
     <TextView
         android:id="@+id/textView3"
@@ -112,7 +114,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createRepasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.962" />
 
     <TextView
         android:id="@+id/textView4"
@@ -123,7 +126,6 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
