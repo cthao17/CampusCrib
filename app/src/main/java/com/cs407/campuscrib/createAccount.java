@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+
+import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.cs407.campuscrib.model.UserModel;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,11 +37,16 @@ public class createAccount extends AppCompatActivity {
         String repassword = rePw.getText().toString();
 
         if (username.equals("") || password.equals("") || repassword.equals("")) {
-            Toast.makeText(this,"Please fill in all information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all information", Toast.LENGTH_SHORT).show();
         } else if (!username.contains("@wisc.edu")) {
             Toast.makeText(this, "Username must be your wisc email", Toast.LENGTH_SHORT).show();
+            user.getText().clear();
+            pw.getText().clear();
+            rePw.getText().clear();
         } else if (!password.equals(repassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            pw.getText().clear();
+            rePw.getText().clear();
         } else {
             auth.createUserWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -49,16 +56,11 @@ public class createAccount extends AppCompatActivity {
                                 // User creation successful
                                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                                // Create a Map to represent user information
-                                Map<String, Object> userData = new HashMap<>();
-                                userData.put("email", username);
-                                userData.put("password", password);
-                                userData.put("repassword", repassword);
+                                UserModel userModel = new UserModel(username, FirebaseUtil.currentUser());
 
-                                // Store the user information in a Firestore collection named "users"
                                 db.collection("users")
                                         .document(userId)
-                                        .set(userData)
+                                        .set(userModel)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -66,10 +68,14 @@ public class createAccount extends AppCompatActivity {
                                                     // Firestore update successful
                                                     user.getText().clear();
                                                     pw.getText().clear();
+                                                    rePw.getText().clear();
                                                     goToActivity();
                                                 } else {
                                                     // Handle the error
                                                     Toast.makeText(createAccount.this, "Error storing user information", Toast.LENGTH_SHORT).show();
+                                                    user.getText().clear();
+                                                    pw.getText().clear();
+                                                    rePw.getText().clear();
                                                 }
                                             }
                                         });
@@ -78,6 +84,7 @@ public class createAccount extends AppCompatActivity {
                                 Toast.makeText(createAccount.this, "Something went wrong. Try again!", Toast.LENGTH_SHORT).show();
                                 user.getText().clear();
                                 pw.getText().clear();
+                                rePw.getText().clear();
                             }
                         }
                     });
