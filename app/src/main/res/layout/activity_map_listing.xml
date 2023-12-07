@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#555555">
+    android:background="#555555"
+    tools:context=".Map_Listing">
 
     <Button
         android:id="@+id/buttonFilter"
@@ -189,12 +190,12 @@
                     android:backgroundTint="#05555555"
                     android:src="@android:drawable/btn_star" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="300sp"
-                    android:layout_height="300sp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@tools:sample/avatars" />
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView3"-->
+                <!--                    android:layout_width="300sp"-->
+                <!--                    android:layout_height="300sp"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:src="@tools:sample/avatars" />-->
 
                 <ScrollView
                     android:layout_width="300sp"

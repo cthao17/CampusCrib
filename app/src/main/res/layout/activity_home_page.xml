@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".homePage">
 
     <RelativeLayout
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
-            android:text="Logged as"
+            android:text="Logged in as "
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -61,6 +62,9 @@
         android:layout_marginBottom="37dp"
         android:ems="10"
         android:inputType="text"
+        android:clickable="false"
+        android:focusable="false"
+        android:cursorVisible="false"
         android:text="What would you like to do today?"
         app:layout_constraintBottom_toTopOf="@+id/createListingbutton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +122,7 @@
         android:layout_marginTop="131dp"
         android:background="@drawable/rounded_border"
         android:gravity="center"
-        android:text="Welcome to CampusCrib, [User's Name]! \n \n Your housing search just got easier. Whether you're looking for the perfect place to stay or a great roommate to share it with, we've got you covered. Get started now to find your ideal housing solution, exclusively for UW-Madison students! Let's make your campus life comfortable and convenient. Happy searching!"
+        android:text="Welcome to CampusCrib! \n \n Your housing search just got easier. Whether you're looking for the perfect place to stay or a great roommate to share it with, we've got you covered. Get started now to find your ideal housing solution, exclusively for UW-Madison students! Let's make your campus life comfortable and convenient. Happy searching!"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

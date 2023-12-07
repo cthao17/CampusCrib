@@ -7,31 +7,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class homePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        TextView textView = findViewById(R.id.myTextView2);
+
+        if (user != null) {
+            String username = user.getEmail();
+            textView.setText("Logged in as " + username);
+        }
     }
-    //    public void createListingClick() {
-//        goToCreateListingActivity();
-//    }
-//    public void updateProfileClick() {
-//        goToProfileActivity();
-//    }
-//    public void listingClick() {
-//        goToSearchListingActivity();
-//    }
-    public void listingClick(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-    public void updateProfileClick(View view) {
+    public void createListingClick(View view) {
         Intent intent = new Intent(this, homePage.class);
         startActivity(intent);
     }
-    public void createListingClick(View view) {
+    public void listingClick(View view) {
+        goToMapListingActivity();
+    }
+    public void updateProfileClick(View view) {
         Intent intent = new Intent(this, homePage.class);
         startActivity(intent);
     }
@@ -40,28 +40,29 @@ public class homePage extends AppCompatActivity {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.top_menu, popup.getMenu());
 
+        // remove home from menu when we are on home page
+        MenuItem homeItem = popup.getMenu().findItem(R.id.home);
+        homeItem.setVisible(false);
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if (item.getItemId() == R.id.home) {
-                    goToHomeActivity();
-                    return true;
-                } else if (item.getItemId() == R.id.logout) {
+                if (item.getItemId() == R.id.logout) {
                     goToLoginActivity();
                     return true;
                     //} else if (item.getItemId() == R.id.personalProfile) {
                     //    goToProfileActivity();
                     //    return true;
-                    } else if (item.getItemId() == R.id.searchListing) {
-                        goToSearchListingActivity();
+                    } else if (item.getItemId() == R.id.MapListing) {
+                        goToMapListingActivity();
                         return true;
                     //} else if (item.getItemId() == R.id.saved) {
                     //    goToSavedListingActivity();
                     //    return true;
-                    //} else if (item.getItemId() == R.id.personalListing) {
-                    //    goToPersonalListingActivity();
-                    //    return true;
+                    } else if (item.getItemId() == R.id.personalListing) {
+                        goToPersonalListingActivity();
+                        return true;
                     } else if (item.getItemId() == R.id.chat) {
                         goToChatActivity();
                         return true;
@@ -71,11 +72,6 @@ public class homePage extends AppCompatActivity {
             }
         });
         popup.show();
-    }
-
-    public void goToHomeActivity() {
-        Intent intent = new Intent(this, homePage.class);
-        startActivity(intent);
     }
     public void goToLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -89,18 +85,18 @@ public class homePage extends AppCompatActivity {
 //        Intent intent = new Intent(this, ProfileActivity.class);
 //        startActivity(intent);
 //    }
-    public void goToSearchListingActivity() {
-        Intent intent = new Intent(this, SearchActivity.class);
+    public void goToMapListingActivity() {
+        Intent intent = new Intent(this, Map_Listing.class);
         startActivity(intent);
     }
 //    public void goToSavedListingActivity() {
 //        Intent intent = new Intent(this, SavedListingActivity.class);
 //        startActivity(intent);
 //    }
-//    public void goToPersonalListingActivity() {
-//        Intent intent = new Intent(this, PersonalListingActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToPersonalListingActivity() {
+        Intent intent = new Intent(this, Personal_Listing.class);
+        startActivity(intent);
+    }
     public void goToChatActivity() {
         Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);

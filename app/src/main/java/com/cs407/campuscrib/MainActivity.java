@@ -32,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                user.getText().clear();
+                                pw.getText().clear();
                                 goToActivity();
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                                user.getText().clear();
                                 pw.getText().clear();
                             }
                         }

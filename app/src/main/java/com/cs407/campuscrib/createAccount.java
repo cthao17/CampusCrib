@@ -12,7 +12,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,8 +37,13 @@ public class createAccount extends AppCompatActivity {
             Toast.makeText(this,"Please fill in all information", Toast.LENGTH_SHORT).show();
         } else if (!username.contains("@wisc.edu")) {
             Toast.makeText(this, "Username must be your wisc email", Toast.LENGTH_SHORT).show();
+            user.getText().clear();
+            pw.getText().clear();
+            rePw.getText().clear();
         } else if (!password.equals(repassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            pw.getText().clear();
+            rePw.getText().clear();
         } else {
             auth.createUserWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -66,10 +70,14 @@ public class createAccount extends AppCompatActivity {
                                                     // Firestore update successful
                                                     user.getText().clear();
                                                     pw.getText().clear();
+                                                    rePw.getText().clear();
                                                     goToActivity();
                                                 } else {
                                                     // Handle the error
                                                     Toast.makeText(createAccount.this, "Error storing user information", Toast.LENGTH_SHORT).show();
+                                                    user.getText().clear();
+                                                    pw.getText().clear();
+                                                    rePw.getText().clear();
                                                 }
                                             }
                                         });
