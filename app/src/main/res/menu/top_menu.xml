@@ -13,7 +13,7 @@
         />
 
     <item
-        android:id="@+id/searchListing"
+        android:id="@+id/MapListing"
         android:title="Search Listing"
         />
 
