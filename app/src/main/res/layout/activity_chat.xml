@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#808080"
-    tools:context=".MainActivity">
+    tools:context=".ChatActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,12 +36,27 @@
             android:layout_marginEnd="10dp"
             android:id="@+id/main_search_btn"/>
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:srcCompat="@drawable/back_arrow" />
+
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_toolbar"
-        android:id="@+id/main_frame_layout"/>
+        android:id="@+id/main_frame_layout">
+
+        <fragment
+            android:id="@+id/chatFragment"
+            android:name="com.cs407.campuscrib.ChatFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </FrameLayout>
 
 </RelativeLayout>
