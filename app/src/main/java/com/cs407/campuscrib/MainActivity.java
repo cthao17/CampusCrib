@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
     public void loginPageLoginClick(View view) {
         EditText user = findViewById(R.id.usernameEditText);
         EditText pw = findViewById(R.id.passwordEditText);
@@ -32,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                user.getText().clear();
-                                pw.getText().clear();
                                 goToActivity();
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                user.getText().clear();
                                 pw.getText().clear();
                             }
                         }

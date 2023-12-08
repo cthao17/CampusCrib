@@ -15,8 +15,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.cs407.campuscrib.model.UserModel;
-import java.util.HashMap;
-import java.util.Map;
 
 public class createAccount extends AppCompatActivity {
     FirebaseAuth auth = FirebaseAuth.getInstance();
