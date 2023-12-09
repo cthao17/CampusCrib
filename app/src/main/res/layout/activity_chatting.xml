@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#808080"
-    tools:context=".MainActivity">
+    tools:context=".ChattingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_toolbar"
+        android:layout_above="@id/bottom_layout"
         android:padding="10dp"
         android:id="@+id/message_recycler_view"
         />
@@ -94,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_toolbar"
+        android:layout_above="@id/bottom_layout"
         android:id="@+id/main_frame_layout">
 
     </FrameLayout>

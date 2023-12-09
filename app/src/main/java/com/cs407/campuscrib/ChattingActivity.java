@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -56,7 +58,7 @@ public class ChattingActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.message_recycler_view);
 
         backBtn.setOnClickListener((v -> {
-            onBackPressed();
+            goToChatActivity();
         }));
 
         otherUsername.setText(otherUser.getUsername());
@@ -77,13 +79,20 @@ public class ChattingActivity extends AppCompatActivity {
                 .orderBy("timestamp", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<MessagesModel> options = new FirestoreRecyclerOptions.Builder<MessagesModel>()
-                .setQuery(query,MessagesModel.class).build();
+                .setQuery(query, MessagesModel.class).build();
 
-        adapter = new ChatRecycler(options,getApplicationContext());
+        adapter = new ChatRecycler(options, getApplicationContext());
         LinearLayoutManager reverseLayout = new LinearLayoutManager(this);
         reverseLayout.setReverseLayout(true);
         recyclerView.setLayoutManager(reverseLayout);
         recyclerView.setAdapter(adapter);
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+
         adapter.startListening();
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -94,38 +103,42 @@ public class ChattingActivity extends AppCompatActivity {
         });
     }
 
-    void sendMessage(String message){
+    void sendMessage(String message) {
+        if (chatroomModel == null) {
+            chatroomModel = new Chatroom(
+                    chatroomId,
+                    Arrays.asList(FirebaseUtil.currentUser(), otherUser.getUserId()),
+                    Timestamp.now(),
+                    ""
+            );
+            FirebaseUtil.getChatroomRef(chatroomId).set(chatroomModel);
+        }
+
         chatroomModel.setLastMessageTime(Timestamp.now());
         chatroomModel.setLastMessageSenderId(FirebaseUtil.currentUser());
         chatroomModel.setLatestMessage(message);
+
         FirebaseUtil.getChatroomRef(chatroomId).set(chatroomModel);
 
-        MessagesModel messagesModel = new MessagesModel(message,FirebaseUtil.currentUser(),Timestamp.now());
+        MessagesModel messagesModel = new MessagesModel(message, FirebaseUtil.currentUser(), Timestamp.now());
         FirebaseUtil.getChatroomMessagesRef(chatroomId).add(messagesModel)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()){
-                            messageInput.setText("");
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        messageInput.setText("");
                     }
                 });
     }
 
-    void getCreateChatroom(){
+    void getCreateChatroom() {
         FirebaseUtil.getChatroomRef(chatroomId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 chatroomModel = task.getResult().toObject(Chatroom.class);
-                if (chatroomModel == null) {
-                    chatroomModel = new Chatroom(
-                            chatroomId,
-                            Arrays.asList(FirebaseUtil.currentUser(),otherUser.getUserId()),
-                            Timestamp.now(),
-                            ""
-                    );
-                    FirebaseUtil.getChatroomRef(chatroomId).set(chatroomModel);
-                }
             }
         });
+    }
+
+    public void goToChatActivity() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 }

@@ -20,7 +20,7 @@ public class FirebaseUtil {
     }
 
     public static DocumentReference getChatroomRef(String chatroomId) {
-        return FirebaseFirestore.getInstance().collection("charooms").document(chatroomId);
+        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatroomId);
     }
 
     public static CollectionReference getChatroomMessagesRef(String chatroomId) {

@@ -36,10 +36,11 @@
             android:layout_marginEnd="10dp"
             android:id="@+id/main_search_btn"/>
 
-        <ImageView
-            android:id="@+id/imageView"
+        <ImageButton
+            android:id="@+id/back_button"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/back_arrow" />
 
     </RelativeLayout>

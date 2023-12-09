@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
         searchInput.requestFocus();
 
         backButton.setOnClickListener(v -> {
-            onBackPressed();
+            goToChatActivity();
         });
 
         searchButton.setOnClickListener(v -> {
@@ -63,6 +64,11 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    public void goToChatActivity() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 
     @Override

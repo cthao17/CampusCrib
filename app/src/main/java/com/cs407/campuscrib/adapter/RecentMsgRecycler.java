@@ -35,10 +35,22 @@ public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom,RecentM
         FirebaseUtil.getOtherUserFromChat(model.getUserIds())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        boolean latestSentMsgCurrentUser = model.getLastMessageSenderId().equals(FirebaseUtil.currentUser());
+
+
                         UserModel otherUser = task.getResult().toObject(UserModel.class);
                         holder.username.setText(otherUser.getUsername());
-                        holder.lastMsgTxt.setText(model.getLatestMessage());
+                        if(latestSentMsgCurrentUser)
+                            holder.lastMsgTxt.setText("You : " + model.getLatestMessage());
+                        else
+                            holder.lastMsgTxt.setText(model.getLatestMessage());
                         holder.lastMsgTime.setText(FirebaseUtil.timeStamptoString(model.getLastMessageTime()));
+                        holder.itemView.setOnClickListener(v -> {
+                            Intent intent = new Intent(context, ChattingActivity.class);
+                            AndroidFunctionsUtil.passUsername(intent,otherUser);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        });
                     }
                 });
 
