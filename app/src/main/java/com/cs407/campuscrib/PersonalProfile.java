@@ -135,7 +135,9 @@ public class PersonalProfile extends AppCompatActivity {
                             return null;
                         }
                     });
-        } else {
+        }
+        // delete later
+        else {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
         }

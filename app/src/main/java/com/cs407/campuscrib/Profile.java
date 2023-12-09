@@ -91,6 +91,7 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
+    // Message button not working yet
      public void onMessageClick(View view) {
          Intent intent = new Intent(this, ChattingActivity.class);
          startActivity(intent);
