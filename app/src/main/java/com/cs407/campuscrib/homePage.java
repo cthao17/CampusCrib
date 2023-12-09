@@ -1,6 +1,8 @@
 package com.cs407.campuscrib;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.MenuInflater;
@@ -24,16 +26,14 @@ public class homePage extends AppCompatActivity {
             textView.setText("Logged in as " + username);
         }
     }
-    public void createListingClick(View view) {
-        Intent intent = new Intent(this, homePage.class);
-        startActivity(intent);
-    }
+//    public void createListingClick(View view) {
+//        goToCreateListingActivity();
+//    }
     public void listingClick(View view) {
         goToMapListingActivity();
     }
     public void updateProfileClick(View view) {
-        Intent intent = new Intent(this, homePage.class);
-        startActivity(intent);
+        goToProfileActivity();
     }
     public void showPopup(View view) {
         PopupMenu popup = new PopupMenu(this, view);
@@ -51,9 +51,9 @@ public class homePage extends AppCompatActivity {
                 if (item.getItemId() == R.id.logout) {
                     goToLoginActivity();
                     return true;
-                    //} else if (item.getItemId() == R.id.personalProfile) {
-                    //    goToProfileActivity();
-                    //    return true;
+                    } else if (item.getItemId() == R.id.personalProfile) {
+                        goToProfileActivity();
+                        return true;
                     } else if (item.getItemId() == R.id.MapListing) {
                         goToMapListingActivity();
                         return true;
@@ -74,6 +74,10 @@ public class homePage extends AppCompatActivity {
         popup.show();
     }
     public void goToLoginActivity() {
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("loggedIn", false);
+        editor.apply();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -81,10 +85,10 @@ public class homePage extends AppCompatActivity {
 //        Intent intent = new Intent(this, createActivity.class)
 //        startActivity(intent);
 //    }
-//    public void goToProfileActivity() {
-//        Intent intent = new Intent(this, ProfileActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToProfileActivity() {
+        Intent intent = new Intent(this, PersonalProfile.class);
+        startActivity(intent);
+    }
     public void goToMapListingActivity() {
         Intent intent = new Intent(this, Map_Listing.class);
         startActivity(intent);

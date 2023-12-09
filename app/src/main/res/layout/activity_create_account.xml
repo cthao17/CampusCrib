@@ -52,9 +52,11 @@
         android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="215dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_border"
         android:hint=" Wisc Email"
         android:inputType="text"
+        android:padding="10dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,9 +66,11 @@
         android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="330dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_border"
         android:hint=" Password"
         android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,9 +80,11 @@
         android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="445dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_border"
         android:hint=" Re-enter Password"
         android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,14 +92,16 @@
         android:id="@+id/button"
         android:layout_width="140dp"
         android:layout_height="70dp"
-        android:layout_marginStart="132dp"
+        android:layout_marginStart="135.5dp"
         android:layout_marginTop="576dp"
+        android:layout_marginEnd="135.5dp"
         android:background="@drawable/rounded_button"
         android:onClick="createAccountClick"
         android:text="Create Account"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,13 +109,15 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="99dp"
         android:layout_marginTop="712dp"
+        android:layout_marginEnd="99dp"
         android:onClick="onAlreadyGotLoginClick"
         android:text="Already Got Login?"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,14 +125,13 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="808dp"
+        android:layout_marginEnd="138dp"
         android:text="Join Our Community"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ED3C3C"
+
+    tools:context=".PersonalProfile">
+
+
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/circular_bg"
+        android:backgroundTint="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/person_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/updateNameText"
+        android:layout_width="213dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="text"
+        android:text="Name"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="214dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="4dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Email: "
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="222dp"
+        android:text="Housing Status:"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/statusText"
+        android:layout_width="280dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="218dp"
+        android:background="@null"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:text="Currently Listing or Currently Searching"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aboutText"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="265dp"
+        android:text="About Me:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/aboutMeText"
+        android:layout_width="365dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="310dp"
+        android:background="@drawable/rounded_border"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:clickable="false"
+        android:gravity="top|start"
+        android:hint="About me"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/editButton"
+        android:layout_width="55dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@null"
+        android:onClick="onEditProfileClick"
+        android:src="@drawable/baseline_app_registration_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/housingPrefText"
+        android:layout_width="195dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="425dp"
+        android:text="Housing Preference:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/housingText"
+        android:layout_width="365dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="470dp"
+        android:background="@drawable/rounded_border"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:gravity="top|start"
+        android:hint="Housing Preferences"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/otherInfoText"
+        android:layout_width="117dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="575dp"
+        android:text="Other Info:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/otherText"
+        android:layout_width="365dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/rounded_border"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:gravity="top|start"
+        android:hint="Other info"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/listingbutton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="750dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="onListingClick"
+        android:text="Listings"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/savedbutton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="750dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="onSavedClick"
+        android:text="Saved"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.cs407.campuscrib;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("loggedIn", false);
+        if (isLoggedIn) {
+            goToActivity();
+            finish();
+        }
     }
 
     public void loginPageLoginClick(View view) {
@@ -34,9 +42,14 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 goToActivity();
+                                SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean("loggedIn", true);
+                                editor.apply();
+                                user.getText().clear();
+                                pw.getText().clear();
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                                user.getText().clear();
                                 pw.getText().clear();
                             }
                         }

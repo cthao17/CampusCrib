@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#ED3C3C">
+    android:background="#ED3C3C"
+    tools:context=".Profile">
 
     <ImageView
         android:id="@+id/profile_image_view"
@@ -23,6 +23,7 @@
         android:layout_width="365dp"
         android:layout_height="72dp"
         android:background="@drawable/rounded_border"
+        android:padding="5dp"
         android:text=" Other info"
         tools:layout_editor_absoluteX="23dp"
         tools:layout_editor_absoluteY="544dp" />
@@ -32,6 +33,8 @@
         android:layout_width="365dp"
         android:layout_height="72dp"
         android:background="@drawable/rounded_border"
+        android:padding="5dp"
+
         android:text=" Housing Preferences"
         tools:layout_editor_absoluteX="23dp"
         tools:layout_editor_absoluteY="434dp" />
@@ -49,14 +52,14 @@
 
     <TextView
         android:id="@+id/infoText"
-        android:layout_width="357dp"
-        android:layout_height="29dp"
+        android:layout_width="358dp"
+        android:layout_height="46dp"
         android:text="Housing Status: Currently Listing/Searching"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="227dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="223dp" />
 
     <TextView
         android:id="@+id/aboutText"
@@ -65,8 +68,7 @@
         android:text="About Me:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="269dp" />
 
     <TextView
@@ -75,21 +77,22 @@
         android:layout_height="72dp"
         android:background="@drawable/rounded_border"
         android:text=" About me"
+        android:padding="5dp"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="303dp" />
 
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="276dp"
-        android:layout_height="66dp"
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="275dp"
+        android:layout_height="47dp"
         android:ems="10"
         android:inputType="text"
         android:text="Name"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="160dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="163dp" />
 
     <TextView
         android:id="@+id/housingPrefText"

@@ -71,7 +71,6 @@ public class createAccount extends AppCompatActivity {
                                                 } else {
                                                     // Handle the error
                                                     Toast.makeText(createAccount.this, "Error storing user information", Toast.LENGTH_SHORT).show();
-                                                    user.getText().clear();
                                                     pw.getText().clear();
                                                     rePw.getText().clear();
                                                 }
