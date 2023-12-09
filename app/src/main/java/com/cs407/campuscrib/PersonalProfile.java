@@ -29,27 +29,21 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 public class PersonalProfile extends AppCompatActivity {
-    Boolean editMode = true;
+    private Boolean editMode = true;
     private FirebaseFirestore db;
-    ActivityResultLauncher<Intent> imagePickLauncher;
-    Uri selectedImageUri;
-    ImageView profilePic;
+    private ActivityResultLauncher<Intent> imagePickLauncher;
+    private Uri selectedImageUri;
+    private ImageView profilePic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_profile);
         db = FirebaseFirestore.getInstance();
+        profilePic = findViewById(R.id.profile_image_view);
         getUserData();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        TextView emailView = findViewById(R.id.emailText);
         EditText nameEdit = findViewById(R.id.updateNameText);
-        profilePic = findViewById(R.id.profile_image_view);
-
-        if (user != null) {
-            String username = user.getEmail();
-            emailView.setText("Email: " + username);
-        }
 
         if (nameEdit != null && nameEdit.getText().toString().equals("")) {
             String name = user.getEmail();
@@ -77,6 +71,8 @@ public class PersonalProfile extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
+            TextView emailView = findViewById(R.id.emailText);
+            emailView.setText("Email: " + user.getEmail());
 
             FirebaseUtil.getCurrentProfilePicsRef().getDownloadUrl()
                     .addOnCompleteListener(task -> {
@@ -139,6 +135,9 @@ public class PersonalProfile extends AppCompatActivity {
                             return null;
                         }
                     });
+        } else {
+            Intent intent = new Intent(this, Profile.class);
+            startActivity(intent);
         }
     }
     public void onEditProfileClick(View view) {
