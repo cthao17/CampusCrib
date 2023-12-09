@@ -33,25 +33,32 @@ public class UserSearchRecycler extends FirestoreRecyclerAdapter<UserModel,UserS
     @Override
     protected void onBindViewHolder(@NonNull UserModelViewHolder holder, int position, @NonNull UserModel model) {
         holder.username.setText(model.getUsername());
-        if(model.getUserId().equals(FirebaseUtil.currentUser())) {
-            holder.username.setText(model.getUsername()+" (Me)");
+        if (model.getUserId().equals(FirebaseUtil.currentUser())) {
+            holder.username.setText(model.getUsername() + " (Me)");
+            holder.itemView.setOnClickListener(null);
+            FirebaseUtil.getOtherProfilePicsRef(model.getUserId()).getDownloadUrl()
+                    .addOnCompleteListener(t -> {
+                        if (t.isSuccessful()) {
+                            Uri uri = t.getResult();
+                            UserProfileModel.setProfilePic(context, uri, holder.profilePic);
+                        }
+                    });
+        } else {
+            FirebaseUtil.getOtherProfilePicsRef(model.getUserId()).getDownloadUrl()
+                    .addOnCompleteListener(t -> {
+                        if (t.isSuccessful()) {
+                            Uri uri = t.getResult();
+                            UserProfileModel.setProfilePic(context, uri, holder.profilePic);
+                        }
+                    });
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ChattingActivity.class);
+                AndroidFunctionsUtil.passUsername(intent, model);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            });
         }
-
-        FirebaseUtil.getOtherProfilePicsRef(model.getUserId()).getDownloadUrl()
-                .addOnCompleteListener(t -> {
-                    if(t.isSuccessful()){
-                        Uri uri  = t.getResult();
-                        UserProfileModel.setProfilePic(context, uri, holder.profilePic);
-                    }
-                });
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ChattingActivity.class);
-            AndroidFunctionsUtil.passUsername(intent,model);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        });
-
     }
 
     @NonNull
