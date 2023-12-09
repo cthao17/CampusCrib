@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,6 +44,7 @@ public class ChattingActivity extends AppCompatActivity {
     TextView otherUsername;
     RecyclerView recyclerView;
     ChatRecycler adapter;
+    ImageView imageView;
 
 
     @Override
@@ -56,6 +59,15 @@ public class ChattingActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back_btn);
         otherUsername = findViewById(R.id.other_user);
         recyclerView = findViewById(R.id.message_recycler_view);
+        imageView = findViewById(R.id.profile_pic_img);
+
+        FirebaseUtil.getOtherProfilePicsRef(otherUser.getUserId()).getDownloadUrl()
+                .addOnCompleteListener(t -> {
+                    if(t.isSuccessful()){
+                        Uri uri  = t.getResult();
+                        UserProfileModel.setProfilePic(this, uri, imageView);
+                    }
+                });
 
         backBtn.setOnClickListener((v -> {
             goToChatActivity();

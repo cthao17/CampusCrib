@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cs407.campuscrib.ChattingActivity;
+import com.cs407.campuscrib.UserProfileModel;
 import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
@@ -34,6 +36,14 @@ public class UserSearchRecycler extends FirestoreRecyclerAdapter<UserModel,UserS
         if(model.getUserId().equals(FirebaseUtil.currentUser())) {
             holder.username.setText(model.getUsername()+" (Me)");
         }
+
+        FirebaseUtil.getOtherProfilePicsRef(model.getUserId()).getDownloadUrl()
+                .addOnCompleteListener(t -> {
+                    if(t.isSuccessful()){
+                        Uri uri  = t.getResult();
+                        UserProfileModel.setProfilePic(context, uri, holder.profilePic);
+                    }
+                });
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChattingActivity.class);

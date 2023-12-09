@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cs407.campuscrib.ChattingActivity;
+import com.cs407.campuscrib.UserProfileModel;
 import com.cs407.campuscrib.model.Chatroom;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.model.UserModel;
@@ -32,6 +34,8 @@ public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom,RecentM
 
     @Override
     protected void onBindViewHolder(@NonNull ChatroomViewHolder holder, int position, @NonNull Chatroom model) {
+        // final Boolean[] insertion = {true};
+
         FirebaseUtil.getOtherUserFromChat(model.getUserIds())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -39,6 +43,18 @@ public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom,RecentM
 
 
                         UserModel otherUser = task.getResult().toObject(UserModel.class);
+                        FirebaseUtil.getOtherProfilePicsRef(otherUser.getUserId()).getDownloadUrl()
+                                .addOnCompleteListener(t -> {
+                                    if(t.isSuccessful()){
+                                        Uri uri  = t.getResult();
+                                        UserProfileModel.setProfilePic(context, uri, holder.profilePic);
+                                    }
+
+                                    /*else {
+                                        insertion[0] = false;
+                                    }*/
+                                });
+
                         holder.username.setText(otherUser.getUsername());
                         if(latestSentMsgCurrentUser)
                             holder.lastMsgTxt.setText("You : " + model.getLatestMessage());

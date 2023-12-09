@@ -58,6 +58,11 @@ public class FirebaseUtil {
                 .child(currentUser());
     }
 
+    public static StorageReference getOtherProfilePicsRef(String otherUser) {
+        return FirebaseStorage.getInstance().getReference().child("profile_pic")
+                .child(otherUser);
+    }
+
     public static DocumentReference currentUserDetails(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUser());
     }
