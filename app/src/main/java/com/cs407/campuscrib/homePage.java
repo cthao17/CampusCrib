@@ -58,9 +58,9 @@ public class homePage extends AppCompatActivity {
                     } else if (item.getItemId() == R.id.MapListing) {
                         goToMapListingActivity();
                         return true;
-                    //} else if (item.getItemId() == R.id.saved) {
-                    //    goToSavedListingActivity();
-                    //    return true;
+                    } else if (item.getItemId() == R.id.saved) {
+                        goToSavedListingActivity();
+                        return true;
                     } else if (item.getItemId() == R.id.personalListing) {
                         goToPersonalListingActivity();
                         return true;
@@ -99,10 +99,10 @@ public class homePage extends AppCompatActivity {
         Intent intent = new Intent(this, Map_Listing.class);
         startActivity(intent);
     }
-//    public void goToSavedListingActivity() {
-//        Intent intent = new Intent(this, SavedListingActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToSavedListingActivity() {
+        Intent intent = new Intent(this, SavedListing.class);
+        startActivity(intent);
+    }
     public void goToPersonalListingActivity() {
         Intent intent = new Intent(this, Personal_Listing.class);
         startActivity(intent);
