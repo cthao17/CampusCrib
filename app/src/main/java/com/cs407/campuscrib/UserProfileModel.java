@@ -1,5 +1,15 @@
 package com.cs407.campuscrib;
 
+import android.content.Context;
+import android.net.Uri;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.cs407.campuscrib.utils.FirebaseUtil;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class UserProfileModel {
     private String status;
     private String aboutMe;
@@ -59,5 +69,9 @@ public class UserProfileModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static void setProfilePic(Context context, Uri imageUri, ImageView imageView) {
+        Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,7 +88,12 @@ public class homePage extends AppCompatActivity {
 //    }
     public void goToProfileActivity() {
         Intent intent = new Intent(this, PersonalProfile.class);
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(intent);
+            }
+        }, 300);
     }
     public void goToMapListingActivity() {
         Intent intent = new Intent(this, Map_Listing.class);

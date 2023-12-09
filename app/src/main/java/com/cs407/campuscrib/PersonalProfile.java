@@ -1,14 +1,21 @@
 package com.cs407.campuscrib;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.cs407.campuscrib.utils.FirebaseUtil;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,9 +25,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import android.graphics.Color;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 public class PersonalProfile extends AppCompatActivity {
     Boolean editMode = true;
     private FirebaseFirestore db;
+    ActivityResultLauncher<Intent> imagePickLauncher;
+    Uri selectedImageUri;
+    ImageView profilePic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +44,7 @@ public class PersonalProfile extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         TextView emailView = findViewById(R.id.emailText);
         EditText nameEdit = findViewById(R.id.updateNameText);
+        profilePic = findViewById(R.id.profile_image_view);
 
         if (user != null) {
             String username = user.getEmail();
@@ -46,11 +60,33 @@ public class PersonalProfile extends AppCompatActivity {
             nameEdit.setText(name);
         }
 
+        imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.getData() != null) {
+                            selectedImageUri = data.getData();
+                            UserProfileModel.setProfilePic(this,selectedImageUri, profilePic);
+                        }
+                    }
+                }
+        );
     }
     public void getUserData() {
+        final Boolean[] insertion = {true};
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
+
+            FirebaseUtil.getCurrentProfilePicsRef().getDownloadUrl()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Uri uri  = task.getResult();
+                            UserProfileModel.setProfilePic(this, uri, profilePic);
+                        } else {
+                            insertion[0] = false;
+                        }
+                    });
 
             db.collection("users")
                     .document(uid)
@@ -83,8 +119,24 @@ public class PersonalProfile extends AppCompatActivity {
                                     }
                                 }
                             } else {
-                                Toast.makeText(PersonalProfile.this, "Error Retrieving Info", Toast.LENGTH_SHORT).show();
+                                insertion[0] = false;
                             }
+                        }
+                    });
+
+            if(!insertion[0]) {
+                Toast.makeText(PersonalProfile.this, "Error Retrieving Info", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public void onProfilePicClick(View view) {
+        if (!editMode) {
+            ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)
+                    .createIntent(new Function1<Intent, Unit>() {
+                        @Override
+                        public Unit invoke(Intent intent) {
+                            imagePickLauncher.launch(intent);
+                            return null;
                         }
                     });
         }
@@ -141,6 +193,8 @@ public class PersonalProfile extends AppCompatActivity {
         editText.setPadding(0,0,0,0);
     }
     public void setUserData() {
+        final Boolean[] insertion = {true};
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
@@ -170,13 +224,26 @@ public class PersonalProfile extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(PersonalProfile.this, "Updated Profile", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(PersonalProfile.this, "Error Saving", Toast.LENGTH_SHORT).show();
+                            if (!task.isSuccessful()) {
+                                insertion[0] = false;
                             }
                         }
                     });
+
+            if (selectedImageUri != null) {
+                FirebaseUtil.getCurrentProfilePicsRef().putFile(selectedImageUri)
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                insertion[0] = false;
+                            }
+                        });
+            }
+
+            if(insertion[0]) {
+                Toast.makeText(PersonalProfile.this, "Updated Profile", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(PersonalProfile.this, "Error Saving", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     public void onListingClick(View view) {

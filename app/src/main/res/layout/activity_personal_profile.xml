@@ -18,6 +18,7 @@
         android:background="@drawable/circular_bg"
         android:backgroundTint="@color/white"
         android:scaleType="centerCrop"
+        android:onClick="onProfilePicClick"
         android:src="@drawable/person_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
