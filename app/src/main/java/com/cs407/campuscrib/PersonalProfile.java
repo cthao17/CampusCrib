@@ -136,11 +136,6 @@ public class PersonalProfile extends AppCompatActivity {
                         }
                     });
         }
-        // delete later
-        else {
-            Intent intent = new Intent(this, Profile.class);
-            startActivity(intent);
-        }
     }
     public void onEditProfileClick(View view) {
         ImageButton editButton = findViewById(R.id.editButton);

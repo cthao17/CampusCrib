@@ -164,7 +164,7 @@ public class ChattingActivity extends AppCompatActivity {
 
     public void onProfilePictureClick() {
         Intent intent = new Intent(this, Profile.class);
-        intent.putExtra("otherUserId", otherUser.getUserId());
+        AndroidFunctionsUtil.passUsername(intent, otherUser);
         startActivity(intent);
     }
 }
