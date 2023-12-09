@@ -6,9 +6,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.cs407.campuscrib.utils.FirebaseUtil;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class UserProfileModel {
     private String status;
@@ -17,7 +14,6 @@ public class UserProfileModel {
     private String otherInfo;
     private String name;
 
-    // Default constructor required for Firestore
     public UserProfileModel() {
     }
 

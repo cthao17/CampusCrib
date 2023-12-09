@@ -11,6 +11,8 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import io.grpc.Context;
+
 public class FirebaseUtil {
 
     public static String currentUser() {
@@ -63,6 +65,19 @@ public class FirebaseUtil {
                 .child(otherUser);
     }
 
+    public static StorageReference getListingImagesRef() {
+        return FirebaseStorage.getInstance().getReference().child("listing_images");
+    }
+
+    public static StorageReference getSavedListingImagesRef() {
+        return FirebaseStorage.getInstance().getReference().child("savedListing_images")
+                .child(currentUser());
+    }
+
+    public static StorageReference getPersonalListingImageRef() {
+        return FirebaseStorage.getInstance().getReference().child("listing_images")
+                .child(currentUser());
+    }
     public static DocumentReference currentUserDetails(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUser());
     }
