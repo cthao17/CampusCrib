@@ -141,6 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="272dp"
                     android:text="Location"
                     android:textColor="#6E6C6C"
                     android:textSize="26sp"
@@ -150,7 +151,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.166" />
+                    app:layout_constraintVertical_bias="0.17" />
 
                 <ImageButton
                     android:id="@+id/buttonEdit"
@@ -158,12 +159,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="88dp"
                     android:backgroundTint="#FFFFFF"
+                    android:onClick="onClickEdit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.74"
+                    app:layout_constraintHorizontal_bias="0.937"
                     app:layout_constraintStart_toEndOf="@+id/textViewLocation1"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.207"
+                    app:layout_constraintVertical_bias="0.205"
                     app:srcCompat="@android:drawable/ic_menu_edit" />
 
                 <ScrollView
@@ -173,6 +175,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.164"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLocation1"
                     app:layout_constraintVertical_bias="1.0">
 
@@ -216,9 +219,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
+                    android:onClick="onClickDelete"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.72"
+                    app:layout_constraintHorizontal_bias="0.939"
                     app:layout_constraintStart_toEndOf="@+id/scrollView4"
                     app:layout_constraintTop_toBottomOf="@+id/buttonEdit"
                     app:layout_constraintVertical_bias="0.0"
