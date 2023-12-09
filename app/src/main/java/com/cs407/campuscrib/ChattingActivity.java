@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -84,6 +85,13 @@ public class ChattingActivity extends AppCompatActivity {
 
         getCreateChatroom();
         setUpMessageRecyclerView();
+
+        findViewById(R.id.profile_pic_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProfilePictureClick();
+            }
+        });
     }
 
     void setUpMessageRecyclerView() {
@@ -151,6 +159,12 @@ public class ChattingActivity extends AppCompatActivity {
 
     public void goToChatActivity() {
         Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
+
+    public void onProfilePictureClick() {
+        Intent intent = new Intent(this, Profile.class);
+        intent.putExtra("otherUserId", otherUser.getUserId());
         startActivity(intent);
     }
 }
