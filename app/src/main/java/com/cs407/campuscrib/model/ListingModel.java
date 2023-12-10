@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.google.firebase.Timestamp;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,13 +19,13 @@ public class ListingModel {
     private String location;
     private String uid;
     private List<String> imageIds = new ArrayList<>();
-    private com.google.firebase.Timestamp lastEditTime;
+    private Timestamp lastEditTime;
 
     public ListingModel() {
         this.listingId = generateUniqueId();
     }
 
-    public ListingModel(String cost, String roomNum, String amenities, String availability, String location, com.google.firebase.Timestamp lastEditTime) {
+    public ListingModel(String cost, String roomNum, String amenities, String availability, String location, Timestamp lastEditTime) {
         this.cost = cost;
         this.roomNum = roomNum;
         this.amenities = amenities;
@@ -77,9 +79,9 @@ public class ListingModel {
         return listingId;
     }
 
-    public com.google.firebase.Timestamp getLastEditTime() { return lastEditTime; }
+    public Timestamp getLastEditTime() { return lastEditTime; }
 
-    public void setLastEditTime (com.google.firebase.Timestamp lastEditTime) {
+    public void setLastEditTime (Timestamp lastEditTime) {
         this.lastEditTime = lastEditTime;
     }
     public void setCost(String cost) {
