@@ -115,12 +115,12 @@
 
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/images_button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="79dp"
         android:layout_marginTop="680dp"
-        android:text="Add Images"
+        android:text="Upload Images"
         android:textSize="25dp"
         android:textColor="@color/white"
         app:backgroundTint="#ED3C3C"
@@ -128,12 +128,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/submit_button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="82dp"
         android:layout_marginTop="760dp"
-        android:text="Save Changes"
+        android:text="Create"
         android:textSize="25dp"
         android:textColor="@color/white"
         app:backgroundTint="#ED3C3C"

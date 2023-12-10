@@ -6,24 +6,48 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ListingModel {
+    private String listingId; // Unique ID for the listing
     private String cost;
     private String roomNum;
     private String amenities;
     private String availability;
     private String location;
+    private String uid;
+    private List<String> imageIds = new ArrayList<>();
 
-    public ListingModel() {}
+    public ListingModel() {
+        // Generate a unique ID for the listing
+        this.listingId = generateUniqueId();
+    }
+
     public ListingModel(String cost, String roomNum, String amenities, String availability, String location) {
         this.cost = cost;
         this.roomNum = roomNum;
         this.amenities = amenities;
         this.availability = availability;
         this.location = location;
+        // Generate a unique ID for the listing
+        this.listingId = generateUniqueId();
+        this.uid = generateUid(location, cost, roomNum);
     }
 
+    public List<String> getImageIds() {
+        return imageIds;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    private String generateUid(String location, String cost, String roomNum) {
+        // Concatenate location, cost, and roomNum to create a unique ID
+        return location + cost + roomNum;
+    }
     public String getCost() {
         return cost;
     }
@@ -42,6 +66,10 @@ public class ListingModel {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getListingId() {
+        return listingId;
     }
 
     public void setCost(String cost) {
@@ -64,13 +92,14 @@ public class ListingModel {
         this.location = location;
     }
 
+    private String generateUniqueId() {
+        // Use a more robust method to generate a unique ID, e.g., UUID.randomUUID()
+        return UUID.randomUUID().toString();
+    }
+
     public static void setListingImages(Context context, List<Uri> imageUris, List<ImageView> imageViews) {
         for (int i = 0; i < Math.min(imageUris.size(), imageViews.size()); i++) {
             Glide.with(context).load(imageUris.get(i)).into(imageViews.get(i));
         }
-    }
-
-    public String getUid() {
-        return location+cost+roomNum;
     }
 }
