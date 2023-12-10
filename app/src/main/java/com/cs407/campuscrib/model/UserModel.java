@@ -1,7 +1,5 @@
 package com.cs407.campuscrib.model;
 
-import com.google.firebase.Timestamp;
-
 public class UserModel {
     private String username;
     private String userId;

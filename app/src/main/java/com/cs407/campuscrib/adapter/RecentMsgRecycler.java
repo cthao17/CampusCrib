@@ -24,7 +24,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.auth.User;
 
 
-public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom,RecentMsgRecycler.ChatroomViewHolder> {
+public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom, com.cs407.campuscrib.adapter.RecentMsgRecycler.ChatroomViewHolder> {
 
     Context context;
     public RecentMsgRecycler(@NonNull FirestoreRecyclerOptions<Chatroom> options, Context context) {

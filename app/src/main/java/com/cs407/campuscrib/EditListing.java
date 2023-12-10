@@ -13,8 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -82,7 +85,6 @@ public class EditListing extends AppCompatActivity {
         String roomNum = roomNumEditText.getText().toString().trim();
         String availability = availabilityEditText.getText().toString().trim();
         String amenities = amenitiesEditText.getText().toString().trim();
-
         if (location.isEmpty() || cost.isEmpty() || roomNum.isEmpty() || availability.isEmpty() || amenities.isEmpty()) {
             Toast.makeText(EditListing.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -96,7 +98,7 @@ public class EditListing extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference userDocRef = db.collection("users").document(uid);
 
-            ListingModel listing = new ListingModel(location, cost, roomNum, availability, amenities);
+            ListingModel listing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now());
 
             // Save the listing within the personalListing subcollection of the current user
             userDocRef.collection("personalListing").document(listing.getListingId())
