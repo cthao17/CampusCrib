@@ -2,36 +2,22 @@ package com.cs407.campuscrib;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.firebase.firestore.FieldValue;
+import com.cs407.campuscrib.adapter.ListingRecycler;
 import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.cs407.campuscrib.R;
-import com.cs407.campuscrib.adapter.ListingRecycler;
-import com.cs407.campuscrib.adapter.RecentMsgRecycler;
 import com.cs407.campuscrib.adapter.YourListingAdapter;
-import com.cs407.campuscrib.model.Chatroom;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Firebase;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.List;
 

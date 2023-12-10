@@ -4,21 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.cs407.campuscrib.ChattingActivity;
 import com.cs407.campuscrib.model.ListingModel;
-import com.cs407.campuscrib.UserProfileModel;
-import com.cs407.campuscrib.model.Chatroom;
 import com.cs407.campuscrib.R;
-import com.cs407.campuscrib.model.UserModel;
-import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
-import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
