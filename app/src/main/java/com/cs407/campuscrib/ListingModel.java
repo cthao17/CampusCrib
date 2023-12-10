@@ -21,7 +21,6 @@ public class ListingModel {
     private List<String> imageIds = new ArrayList<>();
 
     public ListingModel() {
-        // Generate a unique ID for the listing
         this.listingId = generateUniqueId();
     }
 
@@ -31,7 +30,6 @@ public class ListingModel {
         this.amenities = amenities;
         this.availability = availability;
         this.location = location;
-        // Generate a unique ID for the listing
         this.listingId = generateUniqueId();
         this.uid = generateUid(location, cost, roomNum);
     }
@@ -40,12 +38,20 @@ public class ListingModel {
         return imageIds;
     }
 
+    public void setImageIds(List<String> imageIds) {
+        this.imageIds = imageIds;
+    }
+
     public String getUid() {
         return uid;
     }
 
+    public void addImageId(String imageId) {
+        imageIds.add(imageId);
+    }
+
+
     private String generateUid(String location, String cost, String roomNum) {
-        // Concatenate location, cost, and roomNum to create a unique ID
         return location + cost + roomNum;
     }
     public String getCost() {
@@ -93,7 +99,6 @@ public class ListingModel {
     }
 
     private String generateUniqueId() {
-        // Use a more robust method to generate a unique ID, e.g., UUID.randomUUID()
         return UUID.randomUUID().toString();
     }
 

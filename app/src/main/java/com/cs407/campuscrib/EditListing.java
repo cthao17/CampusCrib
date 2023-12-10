@@ -1,6 +1,5 @@
 package com.cs407.campuscrib;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,16 +58,15 @@ public class EditListing extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null && data.getData() != null) {
                             selectedImageUris.add(data.getData());
-                            Toast.makeText(EditListing.this, "Image selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditListing.this, "UPLOADED!, Upload Next Image", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         imagePickLauncher.launch(intent);
     }
 
@@ -100,27 +98,34 @@ public class EditListing extends AppCompatActivity {
 
             ListingModel listing = new ListingModel(location, cost, roomNum, availability, amenities);
 
-            // Save the listing within the personalListing subcollection of the user
+            // Save the listing within the personalListing subcollection of the current user
             userDocRef.collection("personalListing").document(listing.getListingId())
                     .set(listing, SetOptions.merge())
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(EditListing.this, "Listing created successfully", Toast.LENGTH_SHORT).show();
+
+                            // Upload images if selected
+                            if (!selectedImageUris.isEmpty()) {
+                                List<String> imageIds = new ArrayList<>();
+
+                                for (Uri imageUri : selectedImageUris) {
+                                    String imageId = UUID.randomUUID().toString();
+                                    imageIds.add(imageId);
+                                    FirebaseUtil.getPersonalListingImageRef().child(listing.getListingId()).child(imageId).putFile(imageUri);
+                                }
+
+                                // Set image IDs in the listing, update the Firestore doc
+                                listing.setImageIds(imageIds);
+                                userDocRef.collection("personalListing").document(listing.getListingId())
+                                        .set(listing, SetOptions.merge());
+                            }
+
                             finish();
                         } else {
                             Toast.makeText(EditListing.this, "Error creating listing", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-            // Upload image if selected
-            if (!selectedImageUris.isEmpty()) {
-                for (Uri imageUri : selectedImageUris) {
-                    // Upload image to Firebase Storage and get the image download URL
-                    String imageId = UUID.randomUUID().toString();
-                    FirebaseUtil.getPersonalListingImageRef().child(listing.getListingId()).child(imageId).putFile(imageUri);
-                    listing.getImageIds().add(imageId);
-                }
-            }
         }
     }
 
@@ -128,21 +133,9 @@ public class EditListing extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            ClipData clipData = data.getClipData();
-            if (clipData != null) {
-                // Multiple images selected
-                for (int i = 0; i < clipData.getItemCount(); i++) {
-                    Uri imageUri = clipData.getItemAt(i).getUri();
-                    selectedImageUris.add(imageUri);
-                }
-            } else if (data.getData() != null) {
-                // Single image selected
-                Uri imageUri = data.getData();
-                selectedImageUris.add(imageUri);
-            }
-
-            Toast.makeText(EditListing.this, "Image(s) selected", Toast.LENGTH_SHORT).show();
+        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUris.add(data.getData());
+            Toast.makeText(EditListing.this, "UPLOADED!, Upload Next Image", Toast.LENGTH_SHORT).show();
         }
     }
 }
