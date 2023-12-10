@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -40,7 +41,14 @@ public class EditListing extends AppCompatActivity {
 
         Button imagesButton = findViewById(R.id.images_button);
         Button submitButton = findViewById(R.id.submit_button);
-        String listingId = getIntent().getStringExtra("listingId");
+        TextView headingTextView = findViewById(R.id.textView5);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("listingId")) {
+            String listingId = intent.getStringExtra("listingId");
+            submitButton.setText("Submit Edits");
+            headingTextView.setText("Edit your Listing");
+        }
         imagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
