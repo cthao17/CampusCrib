@@ -60,6 +60,8 @@ public class EditListing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createListing();
+                Intent intent = new Intent(EditListing.this, Personal_Listing.class);
+                startActivity(intent);
             }
         });
 
