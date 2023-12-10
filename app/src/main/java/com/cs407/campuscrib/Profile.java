@@ -42,6 +42,7 @@ public class Profile extends AppCompatActivity {
         final Boolean[] insertion = {true};
 
         TextView emailView = findViewById(R.id.emailText);
+        emailView.setText("Email: " + otherUser.getUsername());
 
         FirebaseUtil.getOtherProfilePicsRef(otherUser.getUserId()).getDownloadUrl()
                 .addOnCompleteListener(task -> {
