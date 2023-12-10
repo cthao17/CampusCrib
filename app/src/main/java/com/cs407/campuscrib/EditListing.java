@@ -1,5 +1,6 @@
 package com.cs407.campuscrib;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EditListing extends AppCompatActivity {
 
@@ -64,8 +66,9 @@ public class EditListing extends AppCompatActivity {
     }
 
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         imagePickLauncher.launch(intent);
     }
 
@@ -112,7 +115,10 @@ public class EditListing extends AppCompatActivity {
             // Upload image if selected
             if (!selectedImageUris.isEmpty()) {
                 for (Uri imageUri : selectedImageUris) {
-                    FirebaseUtil.getPersonalListingImageRef().child(listing.getListingId()).putFile(imageUri);
+                    // Upload image to Firebase Storage and get the image download URL
+                    String imageId = UUID.randomUUID().toString();
+                    FirebaseUtil.getPersonalListingImageRef().child(listing.getListingId()).child(imageId).putFile(imageUri);
+                    listing.getImageIds().add(imageId);
                 }
             }
         }
@@ -122,9 +128,21 @@ public class EditListing extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUris.add(data.getData());
-            Toast.makeText(EditListing.this, "Image selected", Toast.LENGTH_SHORT).show();
+        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            ClipData clipData = data.getClipData();
+            if (clipData != null) {
+                // Multiple images selected
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Uri imageUri = clipData.getItemAt(i).getUri();
+                    selectedImageUris.add(imageUri);
+                }
+            } else if (data.getData() != null) {
+                // Single image selected
+                Uri imageUri = data.getData();
+                selectedImageUris.add(imageUri);
+            }
+
+            Toast.makeText(EditListing.this, "Image(s) selected", Toast.LENGTH_SHORT).show();
         }
     }
 }
