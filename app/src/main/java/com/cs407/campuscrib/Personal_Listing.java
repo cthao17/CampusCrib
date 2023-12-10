@@ -19,16 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Personal_Listing extends AppCompatActivity {
-    private ImageView listingImage;
-    private FirebaseFirestore db;
-    private Uri selectedImageUri;
-    private List<ListingModel> personalListing = new ArrayList<>();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_listing);
-        db = FirebaseFirestore.getInstance();
     }
     public void createListingClick(View view) {
         Intent intent = new Intent(this, EditListing.class);

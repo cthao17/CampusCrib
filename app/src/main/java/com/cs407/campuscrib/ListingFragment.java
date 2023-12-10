@@ -125,7 +125,7 @@ public class ListingFragment extends Fragment implements YourListingAdapter.OnEd
             // Retrieve image URIs
             List<String> imageURIs = new ArrayList<>();
             for (StorageReference item : listResult.getItems()) {
-                imageURIs.add(item.toString()); // You might need to adjust this based on how URIs are stored
+                imageURIs.add(item.toString());
             }
 
             // Delete each file and corresponding URI
@@ -141,7 +141,6 @@ public class ListingFragment extends Fragment implements YourListingAdapter.OnEd
             }
         });
     }
-
     private void deleteImageFolder(String uid, String listingId) {
         StorageReference folderRef = FirebaseUtil.getPersonalListingImageRef().child(listingId);
          getImageURIsAndDelete(folderRef, new OnFolderDeleteListener() {
