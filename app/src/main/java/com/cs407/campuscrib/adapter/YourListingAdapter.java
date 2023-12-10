@@ -43,11 +43,11 @@ public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         ListingModel listingModel = listingModels.get(position);
 
-        holder.cost.setText(listingModel.getCost());
-        holder.roomNum.setText(listingModel.getRoomNum());
-        holder.amenities.setText(listingModel.getAmenities());
-        holder.availability.setText(listingModel.getAvailability());
-        holder.location.setText(listingModel.getLocation());
+        holder.cost.setText("Cost: " + listingModel.getCost());
+        holder.roomNum.setText("# of Rooms: " + listingModel.getRoomNum());
+        holder.amenities.setText("Amenities: " + listingModel.getAmenities());
+        holder.availability.setText("Availability: " + listingModel.getAvailability());
+        holder.location.setText("Location: " + listingModel.getLocation());
     }
 
     @Override
