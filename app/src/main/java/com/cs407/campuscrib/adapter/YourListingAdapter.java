@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,15 +14,24 @@ import com.cs407.campuscrib.model.ListingModel;
 import java.util.List;
 
 public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.ListingViewHolder> {
-
     private List<ListingModel> listingModels;
+    private OnEditClickListener onEditClickListener;
+    private OnDeleteClickListener onDeleteClickListener;
 
-    // Constructor to initialize the data
-    public YourListingAdapter(List<ListingModel> listingModels) {
+    public YourListingAdapter(List<ListingModel> listingModels, OnEditClickListener onEditClickListener,  OnDeleteClickListener onDeleteClickListener) {
         this.listingModels = listingModels;
+        this.onEditClickListener = onEditClickListener;
+        this.onDeleteClickListener = onDeleteClickListener;
     }
 
-    // Create a ViewHolder for each item in the RecyclerView
+    public interface OnEditClickListener {
+        void onEditClick(String listingId);
+    }
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(String listingId);
+    }
+
     @NonNull
     @Override
     public ListingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,34 +39,30 @@ public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.
         return new ListingViewHolder(view);
     }
 
-    // Bind the data to the ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         ListingModel listingModel = listingModels.get(position);
 
-        // Set the data to the views in your layout
         holder.cost.setText(listingModel.getCost());
         holder.roomNum.setText(listingModel.getRoomNum());
         holder.amenities.setText(listingModel.getAmenities());
         holder.availability.setText(listingModel.getAvailability());
         holder.location.setText(listingModel.getLocation());
-
-        // You can add any other UI updates based on the data
     }
 
-    // Return the total number of items in the data set
     @Override
     public int getItemCount() {
         return listingModels.size();
     }
 
-    // ViewHolder class to hold the views
-    static class ListingViewHolder extends RecyclerView.ViewHolder {
+    public class ListingViewHolder extends RecyclerView.ViewHolder {
         TextView cost;
         TextView roomNum;
         TextView amenities;
         TextView availability;
         TextView location;
+        ImageButton buttonEdit;
+        ImageButton buttonDelete;
 
         public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +71,24 @@ public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.
             amenities = itemView.findViewById(R.id.textViewAmenities);
             availability = itemView.findViewById(R.id.textViewAvailability);
             location = itemView.findViewById(R.id.textViewLocation);
+            buttonDelete = itemView.findViewById(R.id.buttonRemove);
+            buttonEdit = itemView.findViewById(R.id.buttonEdit);
+
+            buttonEdit.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    String listingId = listingModels.get(position).getListingId(); // Ensure listingModels is accessible
+                    onEditClickListener.onEditClick(listingId); // Ensure onEditClickListener is accessible
+                }
+            });
+
+            buttonDelete.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    String listingId = listingModels.get(position).getListingId();
+                    onDeleteClickListener.onDeleteClick(listingId);
+                }
+            });
         }
     }
 }

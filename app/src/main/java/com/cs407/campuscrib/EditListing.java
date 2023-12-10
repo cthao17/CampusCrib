@@ -40,7 +40,7 @@ public class EditListing extends AppCompatActivity {
 
         Button imagesButton = findViewById(R.id.images_button);
         Button submitButton = findViewById(R.id.submit_button);
-
+        String listingId = getIntent().getStringExtra("listingId");
         imagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

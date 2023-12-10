@@ -1,9 +1,12 @@
 package com.cs407.campuscrib;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingFragment extends Fragment {
+public class ListingFragment extends Fragment implements YourListingAdapter.OnEditClickListener,  YourListingAdapter.OnDeleteClickListener  {
     RecyclerView recyclerView;
     ListingRecycler adapter;
     public ListingFragment() {}
@@ -47,7 +50,6 @@ public class ListingFragment extends Fragment {
                     .collection("users")
                     .document(uid)
                     .collection("personalListing")
-                    .orderBy("lastEditTime", Query.Direction.DESCENDING)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -58,7 +60,7 @@ public class ListingFragment extends Fragment {
                                 listingModels.add(listingModel);
                             }
 
-                            YourListingAdapter adapter = new YourListingAdapter(listingModels);
+                            YourListingAdapter adapter = new YourListingAdapter(listingModels, this::onEditClick, this::onDeleteClick);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -66,17 +68,6 @@ public class ListingFragment extends Fragment {
                         }
                     });
         }
-    }
-
-    private List<ListingModel> createDummyData() {
-        List<ListingModel> dummyData = new ArrayList<>();
-
-        // Add multiple dummy ListingModel objects to the list
-        dummyData.add(new ListingModel("Location1", "Cost1", "RoomNum1", "Availability1", "Amenities1", Timestamp.now()));
-        dummyData.add(new ListingModel("Location2", "Cost2", "RoomNum2", "Availability2", "Amenities2", Timestamp.now()));
-        dummyData.add(new ListingModel("Location3", "Cost3", "RoomNum3", "Availability3", "Amenities3", Timestamp.now()));
-
-        return dummyData;
     }
 
     @Override
@@ -98,5 +89,35 @@ public class ListingFragment extends Fragment {
         super.onResume();
         if(adapter!=null)
             adapter.startListening();
+    }
+
+    @Override
+    public void onEditClick(String listingId) {
+        Intent intent = new Intent(getContext(), EditListing.class);
+        intent.putExtra("listingId", listingId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(String listingId) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+
+            FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(uid)
+                    .collection("personalListing")
+                    .document(listingId)
+                    .delete()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            setUpListingView();
+                            Toast.makeText(getContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Error Deleting Listing", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 }
