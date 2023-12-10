@@ -11,17 +11,14 @@ import java.util.List;
 public class ListingModel {
     private String cost;
     private String roomNum;
-    private String distance;
     private String amenities;
     private String availability;
     private String location;
 
-    public ListingModel() {
-    }
-    public ListingModel(String cost, String roomNum, String distance, String amenities, String availability, String location) {
+    public ListingModel() {}
+    public ListingModel(String cost, String roomNum, String amenities, String availability, String location) {
         this.cost = cost;
         this.roomNum = roomNum;
-        this.distance = distance;
         this.amenities = amenities;
         this.availability = availability;
         this.location = location;
@@ -33,10 +30,6 @@ public class ListingModel {
 
     public String getRoomNum() {
         return roomNum;
-    }
-
-    public String getDistance() {
-        return distance;
     }
 
     public String getAmenities() {
@@ -59,10 +52,6 @@ public class ListingModel {
         this.roomNum = roomNum;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
     public void setAmenities(String amenities) {
         this.amenities = amenities;
     }
@@ -79,5 +68,9 @@ public class ListingModel {
         for (int i = 0; i < Math.min(imageUris.size(), imageViews.size()); i++) {
             Glide.with(context).load(imageUris.get(i)).into(imageViews.get(i));
         }
+    }
+
+    public String getUid() {
+        return location+cost+roomNum;
     }
 }

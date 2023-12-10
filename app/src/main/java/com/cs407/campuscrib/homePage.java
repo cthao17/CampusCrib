@@ -27,9 +27,9 @@ public class homePage extends AppCompatActivity {
             textView.setText("Logged in as " + username);
         }
     }
-//    public void createListingClick(View view) {
-//        goToCreateListingActivity();
-//    }
+    public void createListingClick(View view) {
+        goToCreateListingActivity();
+    }
     public void listingClick(View view) {
         goToMapListingActivity();
     }
@@ -82,10 +82,10 @@ public class homePage extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-//    public void goToCreateListingActivity() {
-//        Intent intent = new Intent(this, createActivity.class)
-//        startActivity(intent);
-//    }
+    public void goToCreateListingActivity() {
+        Intent intent = new Intent(this, EditListing.class);
+        startActivity(intent);
+    }
     public void goToProfileActivity() {
         Intent intent = new Intent(this, PersonalProfile.class);
         new Handler().postDelayed(new Runnable() {

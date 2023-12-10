@@ -14,8 +14,7 @@ public class UserProfileModel {
     private String otherInfo;
     private String name;
 
-    public UserProfileModel() {
-    }
+    public UserProfileModel() {}
 
     public UserProfileModel(String status, String aboutMe, String housingPreferences, String otherInfo, String name) {
         this.status = status;
@@ -24,8 +23,6 @@ public class UserProfileModel {
         this.otherInfo = otherInfo;
         this.name = name;
     }
-
-    // Getters and setters (required for Firestore)
 
     public String getStatus() {
         return status;

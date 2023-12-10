@@ -12,11 +12,14 @@
         android:theme="@style/Theme.CampusCrib"
         tools:targetApi="31">
         <activity
+            android:name=".EditListing"
+            android:exported="false" />
+        <activity
             android:name=".SavedListing"
             android:exported="false" />
         <activity
             android:name=".PersonalProfile"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Profile"
             android:exported="false" />
