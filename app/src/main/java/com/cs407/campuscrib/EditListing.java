@@ -26,6 +26,11 @@ import java.util.UUID;
 
 public class EditListing extends AppCompatActivity {
 
+    private EditText locationEditText;
+    private EditText costEditText;
+    private EditText roomNumEditText;
+    private EditText availabilityEditText;
+    private EditText amenitiesEditText;
     private static final int IMAGE_PICK_REQUEST_CODE = 1;
     private List<Uri> selectedImageUris = new ArrayList<>();
     private ActivityResultLauncher<Intent> imagePickLauncher;
@@ -39,11 +44,20 @@ public class EditListing extends AppCompatActivity {
         Button submitButton = findViewById(R.id.submit_button);
         TextView headingTextView = findViewById(R.id.textView5);
 
+        locationEditText = findViewById(R.id.EditTextLocation);
+        costEditText = findViewById(R.id.EditTextCost);
+        roomNumEditText = findViewById(R.id.EditTextRoomNum);
+        availabilityEditText = findViewById(R.id.EditTextAvailability);
+        amenitiesEditText = findViewById(R.id.EditTextAmenities);
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("listingId")) {
             String listingId = intent.getStringExtra("listingId");
             submitButton.setText("Submit Edits");
             headingTextView.setText("Edit your Listing");
+
+            // Retrieve the listing data using the listingId and populate EditText fields
+            retrieveListingData(listingId);
         }
         imagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +69,11 @@ public class EditListing extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createListing();
+                if (isEditingExistingListing()) {
+                    updateListing();
+                } else {
+                    createListing();
+                }
                 Intent intent = new Intent(EditListing.this, Personal_Listing.class);
                 startActivity(intent);
             }
@@ -80,12 +98,6 @@ public class EditListing extends AppCompatActivity {
     }
 
     private void createListing() {
-        EditText locationEditText = findViewById(R.id.EditTextLocation);
-        EditText costEditText = findViewById(R.id.EditTextCost);
-        EditText roomNumEditText = findViewById(R.id.EditTextRoomNum);
-        EditText availabilityEditText = findViewById(R.id.EditTextAvailability);
-        EditText amenitiesEditText = findViewById(R.id.EditTextAmenities);
-
         String location = locationEditText.getText().toString().trim();
         String cost = costEditText.getText().toString().trim();
         String roomNum = roomNumEditText.getText().toString().trim();
@@ -136,6 +148,111 @@ public class EditListing extends AppCompatActivity {
                     });
         }
     }
+
+    private void updateListing() {
+        String location = locationEditText.getText().toString().trim();
+        String cost = costEditText.getText().toString().trim();
+        String roomNum = roomNumEditText.getText().toString().trim();
+        String availability = availabilityEditText.getText().toString().trim();
+        String amenities = amenitiesEditText.getText().toString().trim();
+        if (location.isEmpty() || cost.isEmpty() || roomNum.isEmpty() || availability.isEmpty() || amenities.isEmpty()) {
+            Toast.makeText(EditListing.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            String uid = user.getUid();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference listingDocRef;
+
+            if (isEditingExistingListing()) {
+                String listingId = getIntent().getStringExtra("listingId");
+                listingDocRef = db.collection("users").document(uid)
+                        .collection("personalListing").document(listingId);
+            } else {
+                ListingModel newListing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now());
+                listingDocRef = db.collection("users").document(uid)
+                        .collection("personalListing").document(newListing.getListingId());
+            }
+
+            listingDocRef.update(
+                    "location", location,
+                    "cost", cost,
+                    "roomNum", roomNum,
+                    "availability", availability,
+                    "amenities", amenities
+            ).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(EditListing.this, "Listing updated successfully", Toast.LENGTH_SHORT).show();
+
+                    // Upload images if selected
+                    if (!selectedImageUris.isEmpty()) {
+                        List<String> imageIds = new ArrayList<>();
+
+                        for (Uri imageUri : selectedImageUris) {
+                            String imageId = UUID.randomUUID().toString();
+                            imageIds.add(imageId);
+                            FirebaseUtil.getPersonalListingImageRef().child(listingDocRef.getId()).child(imageId).putFile(imageUri);
+                        }
+
+                        // Set image IDs in the listing, update the Firestore doc
+                        listingDocRef.update("imageIds", imageIds)
+                                .addOnCompleteListener(imageUploadTask -> {
+                                    if (imageUploadTask.isSuccessful()) {
+                                        Toast.makeText(EditListing.this, "Images uploaded successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(EditListing.this, "Error uploading images", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+
+                    finish();
+                } else {
+                    Toast.makeText(EditListing.this, "Error updating listing", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
+    private void retrieveListingData(String listingId) {
+        // Use Firestore to retrieve the listing data based on the listingId
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            String uid = user.getUid();
+
+            db.collection("users").document(uid).collection("personalListing")
+                    .document(listingId)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            ListingModel listing = task.getResult().toObject(ListingModel.class);
+
+                            if (listing != null) {
+                                // Populate the EditText fields with the retrieved data
+                                locationEditText.setText(listing.getLocation());
+                                costEditText.setText(listing.getCost());
+                                roomNumEditText.setText(listing.getRoomNum());
+                                availabilityEditText.setText(listing.getAvailability());
+                                amenitiesEditText.setText(listing.getAmenities());
+                            }
+                        } else {
+                            // Handle the error
+                        }
+                    });
+        }
+    }
+
+    private boolean isEditingExistingListing() {
+        Intent intent = getIntent();
+        return intent != null && intent.hasExtra("listingId");
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
