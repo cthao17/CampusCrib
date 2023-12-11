@@ -82,6 +82,11 @@ public class FirebaseUtil {
         return FirebaseStorage.getInstance().getReference().child("listing_images")
                 .child(currentUser());
     }
+
+    public static StorageReference getMainListingImageRef(String Uid) {
+        return FirebaseStorage.getInstance().getReference().child("listing_images")
+                .child(Uid);
+    }
     public static DocumentReference currentUserDetails(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUser());
     }

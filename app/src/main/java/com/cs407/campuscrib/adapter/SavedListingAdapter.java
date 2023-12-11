@@ -61,15 +61,14 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         holder.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ED3C3C")));
         otherUser.setUserId(listingModel.getUid());
         otherUser.setUsername(listingModel.getEmail());
-        setImages(listingModel.getListingId(), holder.listingImages);
+        setImages(listingModel.getListingId(), holder.listingImages, listingModel.getUid());
     }
 
-    public void setImages(String listingId, ImageView listingImage) {
+    public void setImages(String listingId, ImageView listingImage, String Uid) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
 
         if (user != null) {
-            StorageReference folderRef = FirebaseUtil.getPersonalListingImageRef().child(listingId);
+            StorageReference folderRef = FirebaseUtil.getMainListingImageRef(Uid).child(listingId);
             folderRef.listAll().addOnSuccessListener(listResult -> {
                 // Retrieve image URIs
                 List<String> imageURIs = new ArrayList<>();
