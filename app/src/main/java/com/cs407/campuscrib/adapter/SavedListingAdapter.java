@@ -74,6 +74,12 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
                 onSendMessageClickListener.onSendMessageClick(currentOtherUser);
             }
         });
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null && currentUser.getUid().equals(listingModel.getUid())) {
+            holder.favorite.setVisibility(View.GONE);
+            holder.sendMessage.setVisibility(View.GONE);
+        }
     }
 
     public void setImages(String listingId, ImageView listingImage, String Uid) {
