@@ -142,13 +142,6 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
                     onFavoriteClickListener.onFavoriteClick(listingModel);
                 }
             });
-
-//            sendMessage.setOnClickListener(view -> {
-//                int position = getBindingAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION) {
-//                    onSendMessageClickListener.onSendMessageClick(otherUser);
-//                }
-//            });
         }
     }
 }
