@@ -50,6 +50,14 @@ public class EditListing extends AppCompatActivity {
         availabilityEditText = findViewById(R.id.EditTextAvailability);
         amenitiesEditText = findViewById(R.id.EditTextAmenities);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        TextView textView = findViewById(R.id.myTextView2);
+
+        if (user != null) {
+            String username = user.getEmail();
+            textView.setText("Logged in as " + username);
+        }
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("listingId")) {
             String listingId = intent.getStringExtra("listingId");
