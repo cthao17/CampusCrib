@@ -22,9 +22,7 @@ public class ListingModel {
     private List<String> imageIds = new ArrayList<>();
     private Timestamp lastEditTime;
     private String email;
-    public ListingModel() {
-        this.listingId = generateUniqueId();
-    }
+    private boolean isFavorite;
 
     public ListingModel(String cost, String roomNum, String amenities, String availability, String location, Timestamp lastEditTime, String email) {
         this.cost = cost;
@@ -36,6 +34,18 @@ public class ListingModel {
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.lastEditTime = lastEditTime;
         this.email = email;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public ListingModel() {
+        this.listingId = generateUniqueId();
     }
 
     public List<String> getImageIds() {

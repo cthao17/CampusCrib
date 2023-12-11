@@ -1,16 +1,19 @@
 package com.cs407.campuscrib.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cs407.campuscrib.EditListing;
+import com.cs407.campuscrib.FullScreenImageActivity;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -19,12 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.cs407.campuscrib.adapter.ListingRecycler.ListingModelViewHolder> {
+public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, ListingRecycler.ListingModelViewHolder> {
     Context context;
+
     public ListingRecycler(@NonNull FirestoreRecyclerOptions<ListingModel> options, Context context) {
         super(options);
         this.context = context;
     }
+
     @Override
     protected void onBindViewHolder(@NonNull ListingModelViewHolder holder, int position, @NonNull ListingModel model) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -56,15 +61,19 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
         holder.buttonEdit.setOnClickListener(v -> {
             Intent editIntent = new Intent(context, EditListing.class);
             editIntent.putExtra("listingId", model.getListingId());
-            // Add other data you want to transfer, e.g., model.getLocation(), model.getCost(), etc.
             context.startActivity(editIntent);
         });
+
+        holder.listingImages.setOnClickListener(view -> {
+            showAllImages(model.getListingId(), model.getUid());
+        });
     }
+
     @NonNull
     @Override
-    public ListingModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.listing_layout,parent,false);
-        return new ListingRecycler.ListingModelViewHolder(view);
+    public ListingRecycler.ListingModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.listing_layout, parent, false);
+        return new ListingModelViewHolder(view);
     }
 
     class ListingModelViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +83,8 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
         TextView availability;
         TextView location;
         ImageButton buttonEdit;
+        ImageView listingImages;
+
         public ListingModelViewHolder(@NonNull View itemView) {
             super(itemView);
             cost = itemView.findViewById(R.id.textViewCost);
@@ -82,6 +93,22 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
             availability = itemView.findViewById(R.id.textViewAvailability);
             location = itemView.findViewById(R.id.textViewLocation);
             buttonEdit = itemView.findViewById(R.id.buttonEdit);
+            listingImages = itemView.findViewById(R.id.imageView);
+
+            listingImages.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    ListingModel listingModel = getItem(position);
+                    showAllImages(listingModel.getListingId(), listingModel.getUid());
+                }
+            });
         }
+    }
+
+    private void showAllImages(String listingId, String Uid) {
+        Intent intent = new Intent(context, FullScreenImageActivity.class);
+        intent.putExtra("listingId", listingId);
+        intent.putExtra("Uid", Uid);
+        context.startActivity(intent);
     }
 }

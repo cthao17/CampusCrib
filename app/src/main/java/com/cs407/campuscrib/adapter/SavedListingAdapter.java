@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cs407.campuscrib.FullScreenImageActivity;
 import com.cs407.campuscrib.R;
+import com.cs407.campuscrib.SharedPreferencesHelper;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
@@ -82,6 +83,13 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
             holder.favorite.setVisibility(View.GONE);
             holder.sendMessage.setVisibility(View.GONE);
         }
+
+        boolean isFavorite = SharedPreferencesHelper.getFavoriteStatus(holder.itemView.getContext(), listingModel.getListingId());
+        if (isFavorite) {
+            holder.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFF00")));
+        } else {
+            holder.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ED3C3C")));
+        }
     }
 
     public void setImages(String listingId, ImageView listingImage, String Uid) {
@@ -140,7 +148,16 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     ListingModel listingModel = listingModels.get(position);
+                    listingModel.setFavorite(!listingModel.isFavorite());
                     onFavoriteClickListener.onFavoriteClick(listingModel);
+
+                    SharedPreferencesHelper.setFavoriteStatus(view.getContext(), listingModel.getListingId(), listingModel.isFavorite());
+
+                    if (listingModel.isFavorite()) {
+                        ListingViewHolder.this.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFF00")));
+                    } else {
+                        ListingViewHolder.this.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ED3C3C")));
+                    }
                 }
             });
 
