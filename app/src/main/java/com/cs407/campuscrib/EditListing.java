@@ -86,6 +86,8 @@ public class EditListing extends AppCompatActivity {
                         if (data != null && data.getData() != null) {
                             selectedImageUris.add(data.getData());
                             Toast.makeText(EditListing.this, "UPLOADED!, Upload Next Image", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(EditListing.this, "Error getting selected files", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -178,6 +180,9 @@ public class EditListing extends AppCompatActivity {
                         .collection("personalListing").document(newListing.getListingId());
             }
 
+            // Delete existing images linked with the listing
+            deleteListingImages(listingDocRef);
+
             listingDocRef.update(
                     "location", location,
                     "cost", cost,
@@ -217,6 +222,27 @@ public class EditListing extends AppCompatActivity {
         }
     }
 
+    private void deleteListingImages(DocumentReference listingDocRef) {
+        // Delete existing images linked with the listing
+        listingDocRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                ListingModel existingListing = task.getResult().toObject(ListingModel.class);
+
+                if (existingListing != null && existingListing.getImageIds() != null) {
+                    for (String imageId : existingListing.getImageIds()) {
+                        FirebaseUtil.getPersonalListingImageRef().child(listingDocRef.getId()).child(imageId).delete()
+                                .addOnCompleteListener(deleteTask -> {
+                                    if (deleteTask.isSuccessful()) {
+                                        Toast.makeText(EditListing.this, "Existing images deleted successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(EditListing.this, "Error deleting existing images", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                }
+            }
+        });
+    }
 
     private void retrieveListingData(String listingId) {
         // Use Firestore to retrieve the listing data based on the listingId
