@@ -10,6 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SavedListing extends AppCompatActivity {
 
@@ -17,6 +21,13 @@ public class SavedListing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_listing);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        TextView textView = findViewById(R.id.myTextView2);
+
+        if (user != null) {
+            String username = user.getEmail();
+            textView.setText("Logged in as " + username);
+        }
     }
 
     public void showPopup(View view) {
