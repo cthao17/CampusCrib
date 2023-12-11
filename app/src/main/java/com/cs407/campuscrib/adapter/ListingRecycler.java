@@ -68,6 +68,8 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
         return new ListingRecycler.ListingModelViewHolder(view);
     }
 
+    //test comment
+
     class ListingModelViewHolder extends RecyclerView.ViewHolder {
         TextView cost;
         TextView roomNum;
