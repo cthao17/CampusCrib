@@ -14,6 +14,8 @@ import com.cs407.campuscrib.adapter.SavedListingAdapter;
 import com.cs407.campuscrib.adapter.SavedListingRecycler;
 import com.cs407.campuscrib.adapter.YourListingAdapter;
 import com.cs407.campuscrib.model.ListingModel;
+import com.cs407.campuscrib.model.UserModel;
+import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,10 +33,6 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
         recyclerView = rootView.findViewById(R.id.recycler_view);
         setUpListingView();
         return rootView;
-    }
-
-    interface OnFolderDeleteListener {
-        void onFolderDeleteFailure(Exception exception);
     }
 
     void setUpListingView() {
@@ -57,7 +55,8 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
                                 listingModels.add(listingModel);
                             }
 
-                            SavedListingAdapter adapter = new SavedListingAdapter(listingModels, this::onFavoriteClick, this::onSendMessageClick);
+                            UserModel otherUser = new UserModel();
+                            SavedListingAdapter adapter = new SavedListingAdapter(listingModels, this::onFavoriteClick, this::onSendMessageClick, otherUser);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -96,8 +95,9 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
     }
 
     @Override
-    public void onSendMessageClick(String listingId) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+    public void onSendMessageClick(UserModel otherUser) {
+        Intent intent = new Intent(getContext(), ChattingActivity.class);
+        AndroidFunctionsUtil.passUsername(intent, otherUser);
+        startActivity(intent);
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.model.ListingModel;
+import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,11 +23,13 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
     private List<ListingModel> listingModels;
     private SavedListingAdapter.OnFavoriteClickListener onFavoriteClickListener;
     private SavedListingAdapter.OnSendMessageClickListener onSendMessageClickListener;
+    private UserModel otherUser;
 
-    public SavedListingAdapter(List<ListingModel> listingModels, OnFavoriteClickListener onFavoriteClickListener, OnSendMessageClickListener onSendMessageClickListener) {
+    public SavedListingAdapter(List<ListingModel> listingModels, OnFavoriteClickListener onFavoriteClickListener, OnSendMessageClickListener onSendMessageClickListener, UserModel otherUser) {
         this.listingModels = listingModels;
         this.onFavoriteClickListener = onFavoriteClickListener;
         this.onSendMessageClickListener = onSendMessageClickListener;
+        this.otherUser = otherUser;
     }
 
     public interface OnFavoriteClickListener {
@@ -34,7 +37,7 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
     }
 
     public interface OnSendMessageClickListener {
-        void onSendMessageClick(String listingId);
+        void onSendMessageClick(UserModel otherUser);
     }
 
     @NonNull
@@ -53,6 +56,8 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         holder.availability.setText("Availability: " + listingModel.getAvailability());
         holder.location.setText("Location: " + listingModel.getLocation());
         holder.poster.setText("Posted By: "+ listingModel.getEmail());
+        otherUser.setUserId(listingModel.getUid());
+        otherUser.setUsername(listingModel.getEmail());
         setImages(listingModel.getListingId(), holder.listingImages);
     }
 
@@ -121,8 +126,7 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
             sendMessage.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    String listingId = listingModels.get(position).getListingId();
-                    onSendMessageClickListener.onSendMessageClick(listingId);
+                    onSendMessageClickListener.onSendMessageClick(otherUser);
                 }
             });
         }

@@ -1,6 +1,8 @@
 package com.cs407.campuscrib.model;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     private String username;
     private String userId;
 

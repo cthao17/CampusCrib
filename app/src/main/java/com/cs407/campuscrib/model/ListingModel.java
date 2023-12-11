@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ListingModel {
         this.availability = availability;
         this.location = location;
         this.listingId = generateUniqueId();
-        this.uid = generateUid(location, cost, roomNum);
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.lastEditTime = lastEditTime;
         this.email = email;
     }
