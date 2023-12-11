@@ -1,5 +1,6 @@
 package com.cs407.campuscrib.adapter;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.cs407.campuscrib.FullScreenImageActivity;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.model.UserModel;
@@ -88,7 +90,6 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         if (user != null) {
             StorageReference folderRef = FirebaseUtil.getMainListingImageRef(Uid).child(listingId);
             folderRef.listAll().addOnSuccessListener(listResult -> {
-                // Retrieve image URIs
                 List<String> imageURIs = new ArrayList<>();
                 for (StorageReference item : listResult.getItems()) {
                     item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -142,6 +143,21 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
                     onFavoriteClickListener.onFavoriteClick(listingModel);
                 }
             });
+
+            listingImages.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    ListingModel listingModel = listingModels.get(position);
+                    showAllImages(listingModel.getListingId(), listingModel.getUid());
+                }
+            });
+        }
+
+        private void showAllImages(String listingId, String Uid) {
+            Intent intent = new Intent(listingImages.getContext(), FullScreenImageActivity.class);
+            intent.putExtra("listingId", listingId);
+            intent.putExtra("Uid", Uid);
+            listingImages.getContext().startActivity(intent);
         }
     }
 }
