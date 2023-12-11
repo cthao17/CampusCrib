@@ -20,12 +20,12 @@ public class ListingModel {
     private String uid;
     private List<String> imageIds = new ArrayList<>();
     private Timestamp lastEditTime;
-
+    private String email;
     public ListingModel() {
         this.listingId = generateUniqueId();
     }
 
-    public ListingModel(String cost, String roomNum, String amenities, String availability, String location, Timestamp lastEditTime) {
+    public ListingModel(String cost, String roomNum, String amenities, String availability, String location, Timestamp lastEditTime, String email) {
         this.cost = cost;
         this.roomNum = roomNum;
         this.amenities = amenities;
@@ -34,6 +34,7 @@ public class ListingModel {
         this.listingId = generateUniqueId();
         this.uid = generateUid(location, cost, roomNum);
         this.lastEditTime = lastEditTime;
+        this.email = email;
     }
 
     public List<String> getImageIds() {
@@ -75,15 +76,17 @@ public class ListingModel {
         return location;
     }
 
-    public String getListingId() {
-        return listingId;
-    }
+    public String getListingId() { return listingId; }
+
+    public String getEmail() { return email; }
 
     public Timestamp getLastEditTime() { return lastEditTime; }
 
     public void setLastEditTime (Timestamp lastEditTime) {
         this.lastEditTime = lastEditTime;
     }
+
+    public void setEmail (String email) {this.email = email; }
     public void setCost(String cost) {
         this.cost = cost;
     }

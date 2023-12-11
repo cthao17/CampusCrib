@@ -118,7 +118,7 @@ public class EditListing extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference userDocRef = db.collection("users").document(uid);
 
-            ListingModel listing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now());
+            ListingModel listing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now(), user.getEmail());
 
             // Save the listing within the personalListing subcollection of the current user
             userDocRef.collection("personalListing").document(listing.getListingId())
@@ -163,7 +163,6 @@ public class EditListing extends AppCompatActivity {
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (user != null) {
             String uid = user.getUid();
 
@@ -175,7 +174,7 @@ public class EditListing extends AppCompatActivity {
                 listingDocRef = db.collection("users").document(uid)
                         .collection("personalListing").document(listingId);
             } else {
-                ListingModel newListing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now());
+                ListingModel newListing = new ListingModel(location, cost, roomNum, availability, amenities, Timestamp.now(), user.getEmail());
                 listingDocRef = db.collection("users").document(uid)
                         .collection("personalListing").document(newListing.getListingId());
             }

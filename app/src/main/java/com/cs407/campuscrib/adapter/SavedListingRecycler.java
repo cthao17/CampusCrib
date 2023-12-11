@@ -1,27 +1,23 @@
 package com.cs407.campuscrib.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.cs407.campuscrib.EditListing;
-import com.cs407.campuscrib.model.ListingModel;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.cs407.campuscrib.R;
+import com.cs407.campuscrib.model.ListingModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.cs407.campuscrib.adapter.ListingRecycler.ListingModelViewHolder> {
+public class SavedListingRecycler extends FirestoreRecyclerAdapter<ListingModel, SavedListingRecycler.ListingModelViewHolder> {
     Context context;
-    public ListingRecycler(@NonNull FirestoreRecyclerOptions<ListingModel> options, Context context) {
+    public SavedListingRecycler(@NonNull FirestoreRecyclerOptions<ListingModel> options, Context context) {
         super(options);
         this.context = context;
     }
@@ -34,38 +30,34 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
             String uid = user.getUid();
 
             db.collection("users").document(uid).collection("personalListing")
-                    .document(model.getListingId())
+                    .document(model.getListingId())  // Use the unique ID of the listing
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             ListingModel updatedModel = task.getResult().toObject(ListingModel.class);
 
                             if (updatedModel != null) {
+                                // Now, updatedModel contains the latest data for the specific listing
+                                // Use updatedModel to populate your ViewHolder
                                 holder.cost.setText(updatedModel.getCost());
                                 holder.roomNum.setText(updatedModel.getRoomNum());
                                 holder.amenities.setText(updatedModel.getAmenities());
                                 holder.availability.setText(updatedModel.getAvailability());
                                 holder.location.setText(updatedModel.getLocation());
 
+                                // Add any other relevant UI updates based on the updated data
                             }
                         } else {
                             // Handle the error
                         }
                     });
         }
-
-        holder.buttonEdit.setOnClickListener(v -> {
-            Intent editIntent = new Intent(context, EditListing.class);
-            editIntent.putExtra("listingId", model.getListingId());
-            // Add other data you want to transfer, e.g., model.getLocation(), model.getCost(), etc.
-            context.startActivity(editIntent);
-        });
     }
     @NonNull
     @Override
     public ListingModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.listing_layout,parent,false);
-        return new ListingRecycler.ListingModelViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.normal_listing_layout,parent,false);
+        return new SavedListingRecycler.ListingModelViewHolder(view);
     }
 
     class ListingModelViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +66,6 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
         TextView amenities;
         TextView availability;
         TextView location;
-        ImageButton buttonEdit;
         public ListingModelViewHolder(@NonNull View itemView) {
             super(itemView);
             cost = itemView.findViewById(R.id.textViewCost);
@@ -82,7 +73,6 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
             amenities = itemView.findViewById(R.id.textViewAmenities);
             availability = itemView.findViewById(R.id.textViewAvailability);
             location = itemView.findViewById(R.id.textViewLocation);
-            buttonEdit = itemView.findViewById(R.id.buttonEdit);
         }
     }
 }
