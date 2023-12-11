@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
     RecyclerView recyclerView;
     SavedListingRecycler adapter;
     public SavedListingFragment() {}
+    UserModel otherUser = new UserModel();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
@@ -44,7 +49,7 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
             FirebaseFirestore.getInstance()
                     .collection("users")
                     .document(uid)
-                    .collection("personalListing")
+                    .collection("savedListing")
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -55,7 +60,6 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
                                 listingModels.add(listingModel);
                             }
 
-                            UserModel otherUser = new UserModel();
                             SavedListingAdapter adapter = new SavedListingAdapter(listingModels, this::onFavoriteClick, this::onSendMessageClick, otherUser);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
@@ -88,10 +92,50 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
     }
 
     @Override
-    public void onFavoriteClick(String listingId) {
-        Intent intent = new Intent(getContext(), EditListing.class);
-        intent.putExtra("listingId", listingId);
-        startActivity(intent);
+    public void onFavoriteClick(ListingModel listingModel) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            String uid = user.getUid();
+            String listingId = listingModel.getListingId();
+
+            DocumentReference savedListingRef = FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(uid)
+                    .collection("savedListing")
+                    .document(listingId);
+
+            savedListingRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null && task.getResult().exists()) {
+                        // Listing exists in savedListing, delete it
+                        savedListingRef.delete().addOnCompleteListener(deleteTask -> {
+                            if (deleteTask.isSuccessful()) {
+                                Intent intent = new Intent(getContext(), SavedListing.class);
+                                startActivity(intent);
+                                Toast.makeText(getContext(), "Listing removed from savedListing", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle the error while deleting
+                                Toast.makeText(getContext(), "Error removing listing from savedListing", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        // Listing doesn't exist in savedListing, save it
+                        savedListingRef.set(listingModel).addOnCompleteListener(saveTask -> {
+                            if (saveTask.isSuccessful()) {
+                                Toast.makeText(getContext(), "Listing saved successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle the error while saving
+                                Toast.makeText(getContext(), "Error saving listing", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } else {
+                    // Handle the error while checking existence
+                    Toast.makeText(getContext(), "Error checking listing existence", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override

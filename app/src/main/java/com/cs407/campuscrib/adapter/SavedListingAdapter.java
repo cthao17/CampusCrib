@@ -1,5 +1,7 @@
 package com.cs407.campuscrib.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
     }
 
     public interface OnFavoriteClickListener {
-        void onFavoriteClick(String listingId);
+        void onFavoriteClick(ListingModel listingModel);
     }
 
     public interface OnSendMessageClickListener {
@@ -55,7 +57,8 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         holder.amenities.setText("Amenities: " + listingModel.getAmenities());
         holder.availability.setText("Availability: " + listingModel.getAvailability());
         holder.location.setText("Location: " + listingModel.getLocation());
-        holder.poster.setText("Posted By: "+ listingModel.getEmail());
+        holder.poster.setText("Posted By:\n   " + listingModel.getEmail());
+        holder.favorite.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ED3C3C")));
         otherUser.setUserId(listingModel.getUid());
         otherUser.setUsername(listingModel.getEmail());
         setImages(listingModel.getListingId(), holder.listingImages);
@@ -118,8 +121,8 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
             favorite.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    String listingId = listingModels.get(position).getListingId(); // Ensure listingModels is accessible
-                    onFavoriteClickListener.onFavoriteClick(listingId); // Ensure onEditClickListener is accessible
+                    ListingModel listingModel = listingModels.get(position);
+                    onFavoriteClickListener.onFavoriteClick(listingModel);
                 }
             });
 
