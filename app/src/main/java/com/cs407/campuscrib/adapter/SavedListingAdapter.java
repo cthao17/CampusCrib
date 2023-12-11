@@ -62,6 +62,18 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         otherUser.setUserId(listingModel.getUid());
         otherUser.setUsername(listingModel.getEmail());
         setImages(listingModel.getListingId(), holder.listingImages, listingModel.getUid());
+
+        UserModel currentOtherUser = new UserModel();
+        currentOtherUser.setUserId(listingModel.getUid());
+        currentOtherUser.setUsername(listingModel.getEmail());
+
+        // Set the onClickListener for sendMessage
+        holder.sendMessage.setOnClickListener(view -> {
+            int clickedPosition = holder.getBindingAdapterPosition();
+            if (clickedPosition != RecyclerView.NO_POSITION) {
+                onSendMessageClickListener.onSendMessageClick(currentOtherUser);
+            }
+        });
     }
 
     public void setImages(String listingId, ImageView listingImage, String Uid) {
@@ -125,12 +137,12 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
                 }
             });
 
-            sendMessage.setOnClickListener(view -> {
-                int position = getBindingAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    onSendMessageClickListener.onSendMessageClick(otherUser);
-                }
-            });
+//            sendMessage.setOnClickListener(view -> {
+//                int position = getBindingAdapterPosition();
+//                if (position != RecyclerView.NO_POSITION) {
+//                    onSendMessageClickListener.onSendMessageClick(otherUser);
+//                }
+//            });
         }
     }
 }
