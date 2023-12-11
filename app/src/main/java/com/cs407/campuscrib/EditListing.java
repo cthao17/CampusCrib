@@ -114,7 +114,6 @@ public class EditListing extends AppCompatActivity {
 
         if (user != null) {
             String uid = user.getUid();
-            String email = user.getEmail();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference userDocRef = db.collection("users").document(uid);
 

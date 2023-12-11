@@ -46,7 +46,6 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
                                 holder.amenities.setText(updatedModel.getAmenities());
                                 holder.availability.setText(updatedModel.getAvailability());
                                 holder.location.setText(updatedModel.getLocation());
-
                             }
                         } else {
                             // Handle the error
@@ -67,8 +66,6 @@ public class ListingRecycler extends FirestoreRecyclerAdapter<ListingModel, com.
         View view = LayoutInflater.from(context).inflate(R.layout.listing_layout,parent,false);
         return new ListingRecycler.ListingModelViewHolder(view);
     }
-
-    //test comment
 
     class ListingModelViewHolder extends RecyclerView.ViewHolder {
         TextView cost;
