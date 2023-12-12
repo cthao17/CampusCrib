@@ -6,22 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.cs407.campuscrib.adapter.SavedListingAdapter;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
-import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,7 +26,6 @@ import java.util.List;
 public class MainListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener {
 
     RecyclerView recyclerView;
-    SavedListingAdapter adapter;
     UserModel otherUser = new UserModel();
 
     @Override
@@ -100,7 +95,7 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
                             if (deleteTask.isSuccessful()) {
                                 Toast.makeText(getContext(), "Listing removed from savedListing", Toast.LENGTH_SHORT).show();
                             } else {
-                                // Handle the error while deleting
+                                // Handle error when deleting
                                 Toast.makeText(getContext(), "Error removing listing from savedListing", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -110,13 +105,13 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
                             if (saveTask.isSuccessful()) {
                                 Toast.makeText(getContext(), "Listing saved successfully", Toast.LENGTH_SHORT).show();
                             } else {
-                                // Handle the error while saving
+                                // Handle error when saving
                                 Toast.makeText(getContext(), "Error saving listing", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 } else {
-                    // Handle the error while checking existence
+                    // Handle error when checking existence
                     Toast.makeText(getContext(), "Error checking listing existence", Toast.LENGTH_SHORT).show();
                 }
             });

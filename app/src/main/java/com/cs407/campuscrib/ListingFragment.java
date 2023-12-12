@@ -135,7 +135,7 @@ public class ListingFragment extends Fragment implements YourListingAdapter.OnEd
 
                 // Delete the file
                 itemRef.delete().addOnFailureListener(exception -> {
-                    // Handle failure to delete individual file
+                    // Handles failure to delete individual file
                     listener.onFolderDeleteFailure(exception);
                 });
             }

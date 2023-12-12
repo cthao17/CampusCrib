@@ -6,13 +6,12 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class ListingModel {
-    private String listingId; // Unique ID for the listing
+    private String listingId;
     private String cost;
     private String roomNum;
     private String amenities;
@@ -38,11 +37,9 @@ public class ListingModel {
 
     public double getCostAsDouble() {
         try {
-            // Try to parse the cost as a double
             return Double.parseDouble(cost);
         } catch (NumberFormatException e) {
-            // Handle the case where parsing fails, return a default value or throw an exception
-            return 0.0; // You can modify this based on your requirements
+            return 0.0;
         }
     }
 
@@ -78,13 +75,6 @@ public class ListingModel {
         return uid;
     }
 
-    public void addImageId(String imageId) {
-        imageIds.add(imageId);
-    }
-
-    private String generateUid(String location, String cost, String roomNum) {
-        return location + cost + roomNum;
-    }
     public String getCost() {
         return cost;
     }

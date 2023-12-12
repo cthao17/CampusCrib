@@ -131,7 +131,6 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         ImageButton sendMessage;
         ImageView listingImages;
 
-
         public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
             cost = itemView.findViewById(R.id.textViewCost);

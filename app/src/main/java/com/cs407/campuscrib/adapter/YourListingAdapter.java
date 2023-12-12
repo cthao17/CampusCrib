@@ -8,9 +8,7 @@ import android.widget.TextView;
 import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
@@ -76,7 +74,7 @@ public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.
                             Glide.with(listingImage.getContext()).load(firstImageUri).centerCrop().into(listingImage);
                         }
                     }).addOnFailureListener(e -> {
-                        // Handle failure to get download URL
+                        // Handle errorL
                     });
                 }
             });
