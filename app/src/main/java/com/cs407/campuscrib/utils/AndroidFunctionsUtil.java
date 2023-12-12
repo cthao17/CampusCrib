@@ -9,6 +9,7 @@ public class AndroidFunctionsUtil {
     public static void passUsername(Intent intent, UserModel model) {
         intent.putExtra("username",model.getUsername());
         intent.putExtra("userId",model.getUserId());
+        intent.putExtra("fcmToken",model.getFcmToken());
     }
 
     public static UserModel getUserModelIntent(Intent intent) {
