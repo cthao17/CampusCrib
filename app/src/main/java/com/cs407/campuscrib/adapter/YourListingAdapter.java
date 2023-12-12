@@ -1,5 +1,6 @@
 package com.cs407.campuscrib.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.cs407.campuscrib.FullScreenImageActivity;
 import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.utils.FirebaseUtil;
@@ -123,6 +125,21 @@ public class YourListingAdapter extends RecyclerView.Adapter<YourListingAdapter.
                     onDeleteClickListener.onDeleteClick(listingId);
                 }
             });
+
+            listingImages.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    ListingModel listingModel = listingModels.get(position);
+                    showAllImages(listingModel.getListingId(), listingModel.getUid());
+                }
+            });
+        }
+
+        private void showAllImages(String listingId, String Uid) {
+            Intent intent = new Intent(listingImages.getContext(), FullScreenImageActivity.class);
+            intent.putExtra("listingId", listingId);
+            intent.putExtra("Uid", Uid);
+            listingImages.getContext().startActivity(intent);
         }
     }
 }
