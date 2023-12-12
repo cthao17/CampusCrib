@@ -1,6 +1,9 @@
 package com.cs407.campuscrib;
 
+import android.app.Person;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.cs407.campuscrib.model.ListingModel;
+import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
 import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -122,6 +128,10 @@ public class EditListing extends AppCompatActivity {
             return;
         }
 
+        if (!isValidAddress(location)) {
+            return;
+        }
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -153,12 +163,31 @@ public class EditListing extends AppCompatActivity {
                                 userDocRef.collection("personalListing").document(listing.getListingId())
                                         .set(listing, SetOptions.merge());
                             }
-
+                            Intent intent = new Intent(EditListing.this, Personal_Listing.class);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(EditListing.this, "Error creating listing", Toast.LENGTH_SHORT).show();
                         }
                     });
+        }
+    }
+
+    private boolean isValidAddress(String location) {
+        Geocoder geocoder = new Geocoder(this);
+
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(location, 1);
+            if (addresses != null && addresses.size() > 0) {
+                // Valid address
+                return true;
+            } else {
+                Toast.makeText(this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } catch (IOException e) {
+            Toast.makeText(this, "Error checking address validity", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 

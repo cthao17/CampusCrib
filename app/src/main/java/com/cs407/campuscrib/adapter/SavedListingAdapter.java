@@ -94,9 +94,9 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null && currentUser.getUid().equals(listingModel.getUid())) {
-            holder.favorite.setVisibility(View.GONE);
-            holder.sendMessage.setVisibility(View.GONE);
-            holder.map.setVisibility(View.GONE);
+            holder.favorite.setVisibility(View.INVISIBLE);
+            holder.sendMessage.setVisibility(View.INVISIBLE);
+            holder.map.setVisibility(View.INVISIBLE);
         }
 
         boolean isFavorite = SharedPreferencesHelper.getFavoriteStatus(holder.itemView.getContext(), listingModel.getListingId());
