@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class UserModel implements Serializable {
     private String username;
     private String userId;
+    private String fcmToken;
 
     public UserModel() {
 
@@ -29,5 +30,13 @@ public class UserModel implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

@@ -15,6 +15,13 @@ public class AndroidFunctionsUtil {
         UserModel userModel = new UserModel();
         userModel.setUsername(intent.getStringExtra("username"));
         userModel.setUserId(intent.getStringExtra("userId"));
+        userModel.setFcmToken(intent.getStringExtra("fcmToken"));
         return userModel;
+    }
+
+    public static void passUserModelAsIntent(Intent intent, UserModel model){
+        intent.putExtra("username",model.getUsername());
+        intent.putExtra("userId",model.getUserId());
+        intent.putExtra("fcmToken",model.getFcmToken());
     }
 }

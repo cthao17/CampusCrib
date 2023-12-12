@@ -87,7 +87,23 @@ public class FirebaseUtil {
         return FirebaseStorage.getInstance().getReference().child("listing_images")
                 .child(Uid);
     }
+
     public static DocumentReference currentUserDetails(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUser());
+    }
+
+    public static CollectionReference allUserCollectionReference(){
+        return FirebaseFirestore.getInstance().collection("users");
+    }
+
+    public static boolean isLoggedIn(){
+        if(currentUser()!=null){
+            return true;
+        }
+        return false;
+    }
+
+    public static void logout(){
+        FirebaseAuth.getInstance().signOut();
     }
 }
