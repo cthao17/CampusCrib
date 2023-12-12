@@ -1,23 +1,22 @@
 package com.cs407.campuscrib;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.cs407.campuscrib.EditListing;
-import com.cs407.campuscrib.R;
 import com.cs407.campuscrib.adapter.SavedListingAdapter;
 import com.cs407.campuscrib.adapter.SavedListingRecycler;
-import com.cs407.campuscrib.adapter.YourListingAdapter;
 import com.cs407.campuscrib.model.ListingModel;
 import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,11 +25,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener {
+public class SavedListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener, SavedListingAdapter.OnMapClickListener {
     RecyclerView recyclerView;
     SavedListingRecycler adapter;
     public SavedListingFragment() {}
     UserModel otherUser = new UserModel();
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
                                 listingModels.add(listingModel);
                             }
 
-                            SavedListingAdapter adapter = new SavedListingAdapter(listingModels, this::onFavoriteClick, this::onSendMessageClick, otherUser);
+                            SavedListingAdapter adapter = new SavedListingAdapter(listingModels, this::onFavoriteClick, this::onSendMessageClick, this::onMapClick, otherUser);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -143,5 +144,20 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
         Intent intent = new Intent(getContext(), ChattingActivity.class);
         AndroidFunctionsUtil.passUsername(intent, otherUser);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMapClick(String location) {
+        String address = location;
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Check if the Maps app is available
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(getContext(), "Can't open map right now", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.cs407.campuscrib;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener {
+public class MainListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener, SavedListingAdapter.OnMapClickListener {
 
     RecyclerView recyclerView;
     SavedListingAdapter adapter;
@@ -68,7 +69,7 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
                                 Collections.sort(allListings, Comparator.comparing(ListingModel::getRoomNumAsDouble).reversed());
                             }
 
-                            SavedListingAdapter adapter = new SavedListingAdapter(allListings, this::onFavoriteClick, this::onSendMessageClick, otherUser);
+                            SavedListingAdapter adapter = new SavedListingAdapter(allListings, this::onFavoriteClick, this::onSendMessageClick, this::onMapClick, otherUser);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -128,5 +129,20 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
         Intent intent = new Intent(getContext(), ChattingActivity.class);
         AndroidFunctionsUtil.passUsername(intent, otherUser);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMapClick(String location) {
+        String address = location;
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Check if the Maps app is available
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(getContext(), "Can't open map right now", Toast.LENGTH_SHORT).show();
+        }
     }
 }

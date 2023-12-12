@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/listingLayout"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/black_border">
 
     <ImageView
@@ -13,17 +13,10 @@
         android:layout_height="match_parent"
         android:src="@drawable/person_icon" />
 
-    <ScrollView
-        android:id="@+id/scrollView4"
-        android:layout_width="215dp"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="0dp">
-
         <LinearLayout
             android:id="@+id/TextViewLayout"
             android:layout_width="210dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
@@ -81,13 +74,13 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="49dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
         <ImageButton
@@ -99,15 +92,22 @@
             android:layout_marginTop="-2dp"
             android:backgroundTint="@color/white"
             android:src="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/mapButton"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/icons8_google_maps_old" />
+
         <ImageButton
             android:id="@+id/chatToPoster"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="48dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="4dp"
             android:background="@drawable/circle_button"
-            android:padding="8dp"
             android:src="@drawable/send_message_button" />
     </LinearLayout>
 </LinearLayout>

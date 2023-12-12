@@ -28,12 +28,14 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
     private List<ListingModel> listingModels;
     private SavedListingAdapter.OnFavoriteClickListener onFavoriteClickListener;
     private SavedListingAdapter.OnSendMessageClickListener onSendMessageClickListener;
+    private SavedListingAdapter.OnMapClickListener onMapClickListener;
     private UserModel otherUser;
 
-    public SavedListingAdapter(List<ListingModel> listingModels, OnFavoriteClickListener onFavoriteClickListener, OnSendMessageClickListener onSendMessageClickListener, UserModel otherUser) {
+    public SavedListingAdapter(List<ListingModel> listingModels, OnFavoriteClickListener onFavoriteClickListener, OnSendMessageClickListener onSendMessageClickListener, OnMapClickListener onMapClickListener, UserModel otherUser) {
         this.listingModels = listingModels;
         this.onFavoriteClickListener = onFavoriteClickListener;
         this.onSendMessageClickListener = onSendMessageClickListener;
+        this.onMapClickListener = onMapClickListener;
         this.otherUser = otherUser;
     }
 
@@ -43,6 +45,10 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
 
     public interface OnSendMessageClickListener {
         void onSendMessageClick(UserModel otherUser);
+    }
+
+    public interface OnMapClickListener {
+        void onMapClick(String location);
     }
 
     @NonNull
@@ -78,10 +84,19 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
             }
         });
 
+        // set the onClickListener for map button
+        holder.map.setOnClickListener(view -> {
+            int clickedPosition = holder.getBindingAdapterPosition();
+            if (clickedPosition != RecyclerView.NO_POSITION) {
+                onMapClickListener.onMapClick(listingModel.getLocation());
+            }
+        });
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null && currentUser.getUid().equals(listingModel.getUid())) {
             holder.favorite.setVisibility(View.GONE);
             holder.sendMessage.setVisibility(View.GONE);
+            holder.map.setVisibility(View.GONE);
         }
 
         boolean isFavorite = SharedPreferencesHelper.getFavoriteStatus(holder.itemView.getContext(), listingModel.getListingId());
@@ -130,7 +145,7 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
         ImageButton favorite;
         ImageButton sendMessage;
         ImageView listingImages;
-
+        ImageView map;
 
         public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -143,6 +158,7 @@ public class SavedListingAdapter extends RecyclerView.Adapter<SavedListingAdapte
             poster = itemView.findViewById(R.id.textViewPoster);
             sendMessage = itemView.findViewById(R.id.chatToPoster);
             listingImages = itemView.findViewById(R.id.imageView);
+            map= itemView.findViewById(R.id.mapButton);
 
             favorite.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();

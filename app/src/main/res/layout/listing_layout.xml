@@ -32,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -48,7 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -56,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -64,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>

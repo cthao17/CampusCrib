@@ -24,7 +24,7 @@ public class ListingModel {
     private String email;
     private boolean isFavorite;
 
-    public ListingModel(String cost, String roomNum, String amenities, String availability, String location, Timestamp lastEditTime, String email) {
+    public ListingModel(String location, String cost, String roomNum, String availability, String amenities, Timestamp lastEditTime, String email) {
         this.cost = cost;
         this.roomNum = roomNum;
         this.amenities = amenities;
