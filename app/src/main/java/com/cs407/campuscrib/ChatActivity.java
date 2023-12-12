@@ -3,7 +3,6 @@ package com.cs407.campuscrib;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 public class ChatActivity extends AppCompatActivity {

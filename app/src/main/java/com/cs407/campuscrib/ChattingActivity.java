@@ -1,10 +1,8 @@
 package com.cs407.campuscrib;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,25 +11,16 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.cs407.campuscrib.adapter.ChatRecycler;
-import com.cs407.campuscrib.adapter.UserSearchRecycler;
 import com.cs407.campuscrib.model.Chatroom;
 import com.cs407.campuscrib.model.MessagesModel;
 import com.cs407.campuscrib.model.UserModel;
 import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
 import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
-
-import org.w3c.dom.Text;
-
 import java.util.Arrays;
 
 public class ChattingActivity extends AppCompatActivity {

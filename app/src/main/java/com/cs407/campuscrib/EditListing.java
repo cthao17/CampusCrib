@@ -64,7 +64,6 @@ public class EditListing extends AppCompatActivity {
             submitButton.setText("Submit Edits");
             headingTextView.setText("Edit your Listing");
 
-            // Retrieve the listing data using the listingId and populate EditText fields
             retrieveListingData(listingId);
         }
         imagesButton.setOnClickListener(new View.OnClickListener() {

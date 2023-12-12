@@ -21,8 +21,6 @@ import com.cs407.campuscrib.utils.AndroidFunctionsUtil;
 import com.cs407.campuscrib.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.auth.User;
-
 
 public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom, com.cs407.campuscrib.adapter.RecentMsgRecycler.ChatroomViewHolder> {
 
@@ -34,8 +32,6 @@ public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom, com.cs
 
     @Override
     protected void onBindViewHolder(@NonNull ChatroomViewHolder holder, int position, @NonNull Chatroom model) {
-        // final Boolean[] insertion = {true};
-
         FirebaseUtil.getOtherUserFromChat(model.getUserIds())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -49,10 +45,6 @@ public class RecentMsgRecycler extends FirestoreRecyclerAdapter<Chatroom, com.cs
                                         Uri uri  = t.getResult();
                                         UserProfileModel.setProfilePic(context, uri, holder.profilePic);
                                     }
-
-                                    /*else {
-                                        insertion[0] = false;
-                                    }*/
                                 });
 
                         holder.username.setText(otherUser.getUsername());

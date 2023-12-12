@@ -65,7 +65,7 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
                         } else {
-                            // Handle the error
+                            // Handle error
                         }
                     });
         }
@@ -116,23 +116,23 @@ public class SavedListingFragment extends Fragment implements SavedListingAdapte
                                 startActivity(intent);
                                 Toast.makeText(getContext(), "Listing removed from savedListing", Toast.LENGTH_SHORT).show();
                             } else {
-                                // Handle the error while deleting
+                                // Handle error when deleting
                                 Toast.makeText(getContext(), "Error removing listing from savedListing", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        // Listing doesn't exist in savedListing, save it
+                        // Listing doesn't exist in savedListing, save it!
                         savedListingRef.set(listingModel).addOnCompleteListener(saveTask -> {
                             if (saveTask.isSuccessful()) {
                                 Toast.makeText(getContext(), "Listing saved successfully", Toast.LENGTH_SHORT).show();
                             } else {
-                                // Handle the error while saving
+                                // Handle error when saving
                                 Toast.makeText(getContext(), "Error saving listing", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 } else {
-                    // Handle the error while checking existence
+                    // Handle error when checking existence
                     Toast.makeText(getContext(), "Error checking listing existence", Toast.LENGTH_SHORT).show();
                 }
             });

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import com.cs407.campuscrib.adapter.ImagePagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,7 +40,7 @@ public class FullScreenImageActivity extends AppCompatActivity {
                         ImagePagerAdapter adapter = new ImagePagerAdapter(FullScreenImageActivity.this, imageURIs);
                         viewPager.setAdapter(adapter);
                     }).addOnFailureListener(e -> {
-                        // Handle failure to get URL
+                        // Handle error
                     });
                 }
             });

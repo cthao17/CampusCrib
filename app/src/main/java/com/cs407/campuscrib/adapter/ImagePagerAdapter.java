@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.cs407.campuscrib.R;
-
 import java.util.List;
 
 public class ImagePagerAdapter extends PagerAdapter {
