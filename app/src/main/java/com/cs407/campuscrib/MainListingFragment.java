@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainListingFragment extends Fragment implements SavedListingAdapter.OnFavoriteClickListener, SavedListingAdapter.OnSendMessageClickListener {
@@ -35,18 +37,17 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
         recyclerView = rootView.findViewById(R.id.recycler_view);
-        setUpListingView();
+        setUpListingView("timestamp DESC");
         return rootView;
     }
 
-    void setUpListingView() {
+    void setUpListingView(String sortBy) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
             String currentUserId = user.getUid();
             List<ListingModel> allListings = new ArrayList<>();
 
-            // Fetch personal listings from all users except the current user
             FirebaseFirestore.getInstance()
                     .collectionGroup("personalListing")  // Use collectionGroup to query across all users
                     .get()
@@ -57,7 +58,16 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
                                 allListings.add(listingModel);
                             }
 
-                            // Update UI after fetching listings for all users
+                            if ("priceLowtoHigh".equals(sortBy)) {
+                                Collections.sort(allListings, Comparator.comparing(ListingModel::getCostAsDouble));
+                            } else if ("priceHightoLow".equals(sortBy)) {
+                                Collections.sort(allListings, Comparator.comparing(ListingModel::getCostAsDouble).reversed());
+                            } else if ("numRoomLowtoHigh".equals(sortBy)) {
+                                Collections.sort(allListings, Comparator.comparing(ListingModel::getRoomNumAsDouble));
+                            } else if ("numRoomHightoLow".equals(sortBy)) {
+                                Collections.sort(allListings, Comparator.comparing(ListingModel::getRoomNumAsDouble).reversed());
+                            }
+
                             SavedListingAdapter adapter = new SavedListingAdapter(allListings, this::onFavoriteClick, this::onSendMessageClick, otherUser);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(adapter);
@@ -95,7 +105,7 @@ public class MainListingFragment extends Fragment implements SavedListingAdapter
                             }
                         });
                     } else {
-                        // Listing doesn't exist in savedListing, save it
+                        // Listing doesn't exist in savedListing, save it!
                         savedListingRef.set(listingModel).addOnCompleteListener(saveTask -> {
                             if (saveTask.isSuccessful()) {
                                 Toast.makeText(getContext(), "Listing saved successfully", Toast.LENGTH_SHORT).show();

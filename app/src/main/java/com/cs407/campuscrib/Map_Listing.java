@@ -69,6 +69,39 @@ public class Map_Listing extends AppCompatActivity {
         });
         popup.show();
     }
+
+    public void showSortPopupMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.sort_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            String sortingOption = getSortOption(item.getItemId());
+            if (!sortingOption.isEmpty()) {
+                ((MainListingFragment) getSupportFragmentManager().findFragmentById(R.id.currentListingFragment))
+                        .setUpListingView(sortingOption);
+                return true;
+            }
+            return false;
+        });
+
+        popupMenu.show();
+    }
+
+    private String getSortOption(int itemId) {
+        if (itemId == R.id.priceLowtoHigh) {
+            return "priceLowtoHigh";
+        } else if (itemId == R.id.priceHightoLow) {
+            return "priceHightoLow";
+        } else if (itemId == R.id.numRoomLowtoHigh) {
+            return "numRoomLowtoHigh";
+        } else if (itemId == R.id.numRoomHightoLow) {
+            return "numRoomHightoLow";
+        } else {
+            return "";
+        }
+    }
+
     public void goToHomeActivity() {
         Intent intent = new Intent(this, homePage.class);
         startActivity(intent);
@@ -81,10 +114,7 @@ public class Map_Listing extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-    //    public void goToCreateListingActivity() {
-//        Intent intent = new Intent(this, createActivity.class)
-//        startActivity(intent);
-//    }
+
     public void goToProfileActivity() {
         Intent intent = new Intent(this, PersonalProfile.class);
         new Handler().postDelayed(new Runnable() {

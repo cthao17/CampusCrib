@@ -82,10 +82,9 @@ public class EditListing extends AppCompatActivity {
                 } else {
                     createListing();
                 }
-                Intent intent = new Intent(EditListing.this, Personal_Listing.class);
-                startActivity(intent);
             }
         });
+
 
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -113,6 +112,12 @@ public class EditListing extends AppCompatActivity {
         String roomNum = roomNumEditText.getText().toString().trim();
         String availability = availabilityEditText.getText().toString().trim();
         String amenities = amenitiesEditText.getText().toString().trim();
+
+        if (!isValidNumericValue(cost) || !isValidNumericValue(roomNum)) {
+            Toast.makeText(EditListing.this, "Please enter valid numeric values for Cost and Number of Rooms", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (location.isEmpty() || cost.isEmpty() || roomNum.isEmpty() || availability.isEmpty() || amenities.isEmpty()) {
             Toast.makeText(EditListing.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -164,6 +169,12 @@ public class EditListing extends AppCompatActivity {
         String roomNum = roomNumEditText.getText().toString().trim();
         String availability = availabilityEditText.getText().toString().trim();
         String amenities = amenitiesEditText.getText().toString().trim();
+
+        if (!isValidNumericValue(cost) || !isValidNumericValue(roomNum)) {
+            Toast.makeText(EditListing.this, "Please enter valid numeric values for Cost and Number of Rooms", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (location.isEmpty() || cost.isEmpty() || roomNum.isEmpty() || availability.isEmpty() || amenities.isEmpty()) {
             Toast.makeText(EditListing.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -187,7 +198,9 @@ public class EditListing extends AppCompatActivity {
             }
 
             // Delete existing images linked with the listing
-            deleteListingImages(listingDocRef);
+            if (!selectedImageUris.isEmpty()) {
+                deleteListingImages(listingDocRef);
+            }
 
             listingDocRef.update(
                     "location", location,
@@ -225,6 +238,15 @@ public class EditListing extends AppCompatActivity {
                     Toast.makeText(EditListing.this, "Error updating listing", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    private boolean isValidNumericValue(String value) {
+        try {
+            Double.parseDouble(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 

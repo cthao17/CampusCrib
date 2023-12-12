@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/priceLowtoHigh"
+        android:title="$ - Low to High"
+        />
+
+    <item
+        android:id="@+id/priceHightoLow"
+        android:title="$ - High to Low"
+        />
+
+    <item
+        android:id="@+id/numRoomLowtoHigh"
+        android:title="# rooms - Low to High"
+        />
+
+    <item
+        android:id="@+id/numRoomHightoLow"
+        android:title="# rooms - High to Low"
+        />
+
+</menu>

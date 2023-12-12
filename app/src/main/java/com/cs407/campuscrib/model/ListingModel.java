@@ -36,6 +36,24 @@ public class ListingModel {
         this.email = email;
     }
 
+    public double getCostAsDouble() {
+        try {
+            // Try to parse the cost as a double
+            return Double.parseDouble(cost);
+        } catch (NumberFormatException e) {
+            // Handle the case where parsing fails, return a default value or throw an exception
+            return 0.0; // You can modify this based on your requirements
+        }
+    }
+
+    public double getRoomNumAsDouble() {
+        try {
+            return Double.parseDouble(roomNum);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+    }
+
     public boolean isFavorite() {
         return isFavorite;
     }
