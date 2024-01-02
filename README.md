@@ -1,4 +1,4 @@
-LINK TO APP DEMO:https://youtu.be/OJKIFdX0aLk
+LINK TO APP DEMO: https://youtu.be/OJKIFdX0aLk
 
 About:
 CampusCrib provides a platform dedicated to connecting UW students seeking off-campus housing with their peers.
